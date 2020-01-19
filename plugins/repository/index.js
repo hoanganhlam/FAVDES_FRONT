@@ -125,6 +125,11 @@ const apis_module = [
         name: 'reverse_geo',
         methods: {}
     },
+    {
+        space: 'worker',
+        endpoint: 'fetch-address',
+        name: 'fetch_address'
+    },
 ]
 
 

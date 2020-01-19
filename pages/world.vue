@@ -21,6 +21,11 @@
                 destination
             }
         },
+        head() {
+            return {
+                title: "Travel Map"
+            }
+        },
         data() {
             return {
                 data: {

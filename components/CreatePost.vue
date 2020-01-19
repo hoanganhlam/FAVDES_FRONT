@@ -15,7 +15,7 @@
                         field="formatted_address"
                         v-model="form.address" size="is-medium" icon="map-marker-plus"
                         placeholder="Somewhere"
-                        module="autocomplete"/>
+                        module="fetch_address"/>
                 </b-field>
                 <b-field label-position="on-border" label="Name for your place" v-if="posting && form.address">
                     <b-input v-model="form.destination_name"

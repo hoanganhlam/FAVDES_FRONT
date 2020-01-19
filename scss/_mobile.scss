@@ -21,5 +21,11 @@
 }
 
 @media all and (max-width: 480px) {
-
+    .main-content,
+    .header {
+        margin-left: 45px;
+    }
+    .bar {
+        width: 45px;
+    }
 }

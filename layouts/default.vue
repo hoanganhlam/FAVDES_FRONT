@@ -7,10 +7,10 @@
                         <b-navbar-item>
                             <b-dropdown position="is-bottom-left" aria-role="menu" trap-focus>
                                 <b-field slot="trigger">
-                                    <b-input v-if="openSearch" placeholder="Search..." type="search" expanded
+                                    <b-input placeholder="Search..." type="search" expanded
                                              v-model="search"></b-input>
                                     <p class="control">
-                                        <b-button class="button is-success" @click="openSearch = !openSearch">
+                                        <b-button class="button is-success">
                                             <b-icon pack="fa" icon="search" size="is-small"></b-icon>
                                         </b-button>
                                     </p>

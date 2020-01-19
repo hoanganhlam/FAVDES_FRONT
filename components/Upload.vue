@@ -1,7 +1,7 @@
 <template>
     <section>
         <b-field>
-            <b-upload :loading="isLoading" v-model="dropFiles" :multiple="multiple" drag-drop @input="handleInput">
+            <b-upload v-model="dropFiles" :multiple="multiple" drag-drop @input="handleInput">
                 <section class="section">
                     <div class="content has-text-centered">
                         <p>
@@ -10,6 +10,7 @@
                         <p v-if="text">{{text}}</p>
                     </div>
                 </section>
+                <b-loading :is-full-page="false" :active.sync="isLoading" :can-cancel="true"></b-loading>
             </b-upload>
         </b-field>
     </section>
