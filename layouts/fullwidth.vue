@@ -3,18 +3,13 @@
         <header class="header">
             <div class="container medium">
                 <b-navbar>
-                    <template slot="brand">
-                        <b-navbar-item tag="router-link" :to="{ path: '/' }">
-                            <img src="/logo.png" alt="">
-                        </b-navbar-item>
-                    </template>
                     <template slot="start">
                         <b-navbar-item>
                             <b-dropdown position="is-bottom-left" aria-role="menu" trap-focus>
                                 <b-field slot="trigger">
-                                    <b-input placeholder="Search..." type="search" expanded v-model="search"></b-input>
+                                    <b-input v-if="openSearch" placeholder="Search..." type="search" expanded v-model="search"></b-input>
                                     <p class="control">
-                                        <b-button class="button">
+                                        <b-button class="button is-success" @click="openSearch = !openSearch">
                                             <b-icon pack="fa" icon="search" size="is-small"></b-icon>
                                         </b-button>
                                     </p>
@@ -38,10 +33,10 @@
                                 </button>
                             </div>
                             <div class="buttons" v-else>
-                                <button class="button">
+                                <button class="button is-text">
                                     {{$auth.user.username}}
                                 </button>
-                                <button class="button" @click="$auth.logout()">
+                                <button class="button is-text" @click="$auth.logout()">
                                     <b-icon size="is-small" pack="fa" icon="sign-out-alt"></b-icon>
                                 </button>
                             </div>
@@ -51,10 +46,39 @@
             </div>
         </header>
         <main class="main-content">
-            <div class="container medium">
+            <div class="container">
                 <nuxt/>
             </div>
         </main>
+        <div class="bar">
+            <div class="part-1">
+                <div class="image">
+                    <n-link to="/"><img src="/logo.png" alt="FAV Destination"></n-link>
+                </div>
+            </div>
+            <div class="part-2">
+                <div class="elm">
+                    <n-link to="/world" class="button is-text">
+                        <b-icon icon="earth"></b-icon>
+                    </n-link>
+                </div>
+                <div class="elm">
+                    <div class="button is-text">
+                        <b-icon icon="table-of-contents"></b-icon>
+                    </div>
+                </div>
+                <div class="elm">
+                    <div class="button is-text">
+                        <b-icon icon="rss"></b-icon>
+                    </div>
+                </div>
+            </div>
+            <div class="part-3">
+                <div class="button is-text">
+                    <b-icon icon="settings-outline"></b-icon>
+                </div>
+            </div>
+        </div>
         <footer class="footer">
             <div class="content has-text-centered">
                 <p><strong>Made</strong> with ❤️</p>
@@ -73,15 +97,13 @@
 </template>
 
 <script>
-    // import io from 'socket.io-client'
-
     export default {
         data() {
             return {
                 isActive: false,
                 login: true,
-                // socket: io(process.env.socketHost ? process.env.socketHost : `http://127.0.0.1:3001`),
-                search: ''
+                search: '',
+                openSearch: false
             }
         },
         methods: {

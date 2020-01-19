@@ -1,7 +1,7 @@
 <template>
     <section>
         <b-field>
-            <b-upload v-model="dropFiles" multiple drag-drop @input="handleInput">
+            <b-upload :loading="isLoading" v-model="dropFiles" :multiple="multiple" drag-drop @input="handleInput">
                 <section class="section">
                     <div class="content has-text-centered">
                         <p>
@@ -18,26 +18,40 @@
 <script>
     export default {
         props: {
-            text: {}
+            text: {},
+            multiple: {
+                type: Boolean,
+                default: true
+            }
         },
         data() {
             return {
-                dropFiles: []
+                dropFiles: [],
+                isLoading: false,
             }
         },
         name: 'upload',
         methods: {
-            deleteDropFile(index) {
-                this.dropFiles.splice(index, 1)
-            },
             async handleInput(data) {
-                let res = await this.beforeUpload(data[0])
-                this.$emit('done', res)
+                let results = []
+                this.isLoading = true
+                if (this.multiple) {
+                    for (let i = 0; i < data.length; i++) {
+                        let res = await this.beforeUpload(data[i])
+                        results.push(res)
+                    }
+                } else {
+                    let res = await this.beforeUpload(data)
+                    results.push(res)
+                }
+                this.$emit('done', results)
+                this.isLoading = false
             },
             async beforeUpload(file) {
                 let formData = new FormData()
-                formData.append('file', file)
-                return await this.$api.file.post(formData)
+                formData.append('path', file)
+                formData.append('title', file.name)
+                return await this.$api.media.post(formData)
             },
         }
     }

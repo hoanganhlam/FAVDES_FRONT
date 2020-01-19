@@ -1,30 +1,30 @@
-const RestfulRepo = (app, endpoint, callbacks) => {
+const RestfulRepo = (app, item) => {
     let out = {
         list: async (query) => {
-            return await app.$axios.$get(`/${endpoint}`, {params: query})
+            return await app.$axios.$get(`/${item.space}/${item.endpoint}/`, {params: query})
         },
         post: async (body) => {
-            return await app.$axios.$post(`/${endpoint}`, body)
+            return await app.$axios.$post(`/${item.space}/${item.endpoint}/`, body)
         },
         get: async (id, query) => {
-            return await app.$axios.$get(`/${endpoint}/${id}`, query)
+            return await app.$axios.$get(`/${item.space}/${item.endpoint}/${id}/`, query)
         },
         update: async (id, body) => {
-            return await app.$axios.$put(`/${endpoint}/${id}`, body)
+            return await app.$axios.$put(`/${item.space}/${item.endpoint}/${id}/`, body)
         },
         delete: async (id) => {
-            return await app.$axios.$delete(`/${endpoint}/${id}`)
+            return await app.$axios.$delete(`/${item.space}/${item.endpoint}/${id}/`)
         }
     }
-    if (callbacks) {
-        callbacks.forEach(callback => {
+    if (item.callbacks) {
+        item.callbacks.forEach(callback => {
             if (callback.hasId) {
                 out[callback.name] = async (id, body) => {
-                    return await app.$axios[callback.method](`/${endpoint}/${id}/${callback.endpoint}`, body)
+                    return await app.$axios[callback.method](`/${item.space}/${item.endpoint}/${id}/${callback.endpoint}`, body)
                 }
             } else {
                 out[callback.name] = async (body) => {
-                    return await app.$axios[callback.method](`/${endpoint}/${callback.endpoint}`, body)
+                    return await app.$axios[callback.method](`/${item.endpoint}/${callback.endpoint}`, body)
                 }
             }
 
@@ -35,54 +35,103 @@ const RestfulRepo = (app, endpoint, callbacks) => {
 
 const apis_module = [
     {
+        space: 'activity',
+        endpoint: 'config',
+        name: 'config',
+        methods: {}
+    },
+    {
+        space: 'auth',
         endpoint: 'users',
         name: 'user',
         methods: {}
     },
     {
-        endpoint: 'files',
-        name: 'file',
+        space: 'media',
+        endpoint: 'medias',
+        name: 'media',
         methods: {}
     },
     {
-        endpoint: 'subjects',
-        name: 'subject'
+        space: 'destination',
+        endpoint: 'addresses',
+        name: 'address',
+        methods: {}
     },
     {
-        endpoint: 'submissions',
-        name: 'submission'
+        space: 'destination',
+        endpoint: 'destinations',
+        name: 'destination',
+        methods: {}
     },
     {
-        endpoint: 'taxonomies',
-        name: 'taxonomy'
+        space: 'destination',
+        endpoint: 'addresses',
+        name: 'address',
+        methods: {}
     },
     {
+        space: 'activity',
         endpoint: 'comments',
-        name: 'comment'
-    },
-    {
-        endpoint: 'votes',
-        name: 'vote'
-    },
-    {
-        endpoint: 'collections',
-        name: 'collection',
+        name: 'comment',
         callbacks: [
             {
                 hasId: true,
-                name: 'submissions',
+                name: 'vote',
                 method: '$post',
-                endpoint: 'submissions'
+                endpoint: 'vote'
             }
         ]
-    }
+    },
+    {
+        space: 'destination',
+        endpoint: 'votes',
+        name: 'vote',
+        methods: {}
+    },
+    {
+        space: 'activity',
+        endpoint: 'taxonomies',
+        name: 'taxonomy',
+        methods: {}
+    },
+    {
+        space: 'activity',
+        endpoint: 'posts',
+        name: 'post'
+    },
+    {
+        space: 'activity',
+        endpoint: 'activities',
+        name: 'activity',
+        callbacks: [
+            {
+                hasId: true,
+                name: 'vote',
+                method: '$post',
+                endpoint: 'vote'
+            }
+        ]
+    },
+    {
+        space: 'worker',
+        endpoint: 'fetch-address-autocomplete',
+        name: 'autocomplete',
+        methods: {}
+    },
+    {
+        space: 'worker',
+        endpoint: 'fetch-place-reverse',
+        name: 'reverse_geo',
+        methods: {}
+    },
 ]
 
 
 export default function (app, inject) {
     const API = {}
     apis_module.forEach(item => {
-        API[item.name] = RestfulRepo(app, item.endpoint, item.callbacks)
+        API[item.name] = RestfulRepo(app, item)
     })
     app.$api = API
     inject('api', API)

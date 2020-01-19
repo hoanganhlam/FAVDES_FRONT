@@ -1,23 +1,17 @@
 export default {
     namespaced: true,
     state: () => ({
-        user: null,
-        token: null,
-        loggedIn: false
+        contentTypes: null,
     }),
     mutations: {
-        ['SET_USER'](state, user) {
-            state.user = user
-            state.loggedIn = !!user
-        },
-        ['SET_TOKEN'](state, token) {
-            state.token = token
+        ['SET_CONTENT_TYPE'](state, ct) {
+            state.contentTypes = ct
         }
     },
     actions: {},
     getters: {
-        getUser: state => {
-            return state.user
+        getCT: state => {
+            return state.contentTypes
         }
     }
 }

@@ -1,52 +1,110 @@
 <template>
     <div class="submit">
-        <b-field>
-            <b-input size="is-medium" icon="link" icon-pack="fas" :loading="isLoading" v-model="url" placeholder="Just a link!" @blur="scrape()"></b-input>
+        <div class="columns is-multiline">
+            <div class="column" v-bind:class="{'is-12': posting}">
+                <b-field label-position="on-border" label="What are you doing?" expanded>
+                    <b-input v-model="form.content" :size="posting ? '_' : 'is-medium'" icon="format-title"
+                             @input="posting = true" rows="3"
+                             :type="posting ? 'textarea' : 'text'" placeholder="Something"></b-input>
+                </b-field>
+            </div>
+            <div class="column" v-bind:class="{'is-12': posting}">
+                <b-field label-position="on-border" label="in" expanded>
+                    <single-select
+                        @focus="mapping = true"
+                        field="formatted_address"
+                        v-model="form.address" size="is-medium" icon="map-marker-plus"
+                        placeholder="Somewhere"
+                        module="autocomplete"/>
+                </b-field>
+                <b-field label-position="on-border" label="Name for your place" v-if="posting && form.address">
+                    <b-input v-model="form.destination_name"
+                             size="is-medium"
+                             icon="format-title"
+                             placeholder="My point"></b-input>
+                </b-field>
+                <b-field v-if="posting && mapping && addresses.length">
+                    <div class="tags">
+                        <div class="tag clickable is-small" v-for="add in addresses" :key="add.id"
+                             @click="form.address = add"
+                             v-bind:class="{'is-primary': form.address && add.id === form.address.id}">
+                            {{add.formatted_address}}
+                        </div>
+                    </div>
+                </b-field>
+                <b-field v-if="posting && mapping">
+                    <MapBox height="150px" :addresses="form.address ? [form.address] : []" @moved="onMoved"></MapBox>
+                </b-field>
+            </div>
+        </div>
+        <div class="columns is-mobile is-multiline">
+            <div class="column is-3" v-for="p in form.medias" :key="p.id">
+                <div class="image">
+                    <img :src="p.sizes['200_200']" alt="">
+                </div>
+            </div>
+            <div class="column" v-bind:class="{'is-3': form.medias.length}">
+                <Upload @done="form.medias = $event"></Upload>
+            </div>
+        </div>
+        <b-field v-if="posting">
+            <b-input icon="text" v-model="form.title" placeholder="Title for this"></b-input>
         </b-field>
-        <div v-if="posting" class="skeleton">
-            <Submistion v-if="item" v-model="item" :preview="true" @done="handleDone"></Submistion>
+        <b-field v-if="posting">
+            <multiple-select v-model="form.taxonomies" placeholder="#hashtag" module="taxonomy"/>
+        </b-field>
+        <div v-if="posting" class="buttons">
+            <div class="button is-medium" style="width: calc(20% - 0.5rem)" @click="posting = false">
+                <b-icon icon="close"></b-icon>
+            </div>
+            <div class="button is-medium is-success" style="width: 80%" @click="submit">
+                <b-icon size="is-small" icon="send"></b-icon>
+                <span>Send</span>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-    function validateUrl(value) {
-        return /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(value);
-    }
-
     export default {
         name: "CreatePost",
         data() {
             return {
-                url: null,
-                item: null,
+                form: {
+                    title: null,
+                    content: null,
+                    address: null,
+                    medias: [],
+                    taxonomies: [],
+                    destination_name: null
+                },
                 isLoading: false,
-                posting: false
+                posting: false,
+                mapping: false,
+                addresses: []
             }
         },
+        computed: {},
         methods: {
-            scrape() {
-                if (this.url === null || this.url === '' || !validateUrl(this.url)) {
-                    this.posting = false
-                    this.isLoading = false
-                    return
+            async submit() {
+                let data = this.formatData(this.form)
+                let res = await this.$api.post.post(data)
+                this.$emit("done", res)
+                this.form = {
+                    title: null,
+                    content: null,
+                    address: null,
+                    medias: [],
+                    taxonomies: [],
+                    destination_name: null
                 }
-                this.posting = true
-                this.isLoading = true
-                this.item = null
-                this.$axios.$get(`/utilities/scrape?url=${this.url}`).then(res => {
-                    res.url = this.url
-                    res.cType = 'Articles'
-                    this.item = res
-                }).finally(() => {
-                    this.isLoading = false
-                })
-            },
-            handleDone(item) {
-                this.url = null
-                this.item = null
                 this.posting = false
-                this.$emit('done', item)
+            },
+            onMoved(e) {
+                this.addresses = e.addresses
+                if (this.addresses.length) {
+                    this.form.address = this.addresses[0]
+                }
             }
         }
     }
@@ -54,6 +112,9 @@
 
 <style lang="scss">
     .submit {
-        margin-bottom: 1rem;
+        .mgl-map-wrapper {
+            overflow: hidden;
+            border-radius: 2px;
+        }
     }
 </style>

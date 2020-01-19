@@ -29,7 +29,7 @@
         <b-modal :active.sync="isOpen" has-modal-card>
             <div class="modal-card" style="width: 500px">
                 <section class="modal-card-body">
-                    <Uploader @done="() => {fetch(); isOpen=false}"/>
+                    <Upload @done="() => {fetch(); isOpen=false}"/>
                 </section>
             </div>
         </b-modal>
@@ -37,8 +37,13 @@
 </template>
 
 <script>
+    import Upload from "./Upload";
+
     export default {
         name: "Browser",
+        components: {
+            Upload
+        },
         props: {
             value: {
                 type: Array,

@@ -40,100 +40,38 @@ Vue.mixin({
             return string.charAt(0).toUpperCase() + string.slice(1);
         },
         convertName(user) {
-            if (user.firstName || user.lastName) {
-                return user.firstName + ' ' + user.lastName
+            if (user.first_name || user.last_name) {
+                return user.first_name + ' ' + user.last_name
             }
             return user.username
         },
         formatDate(dateStr) {
             return new moment(dateStr, 'YYYY-MM-DD').format('YYYY-MM-DD')
         },
-        handleDelete(module, title, id) {
-            this.$buefy.dialog.confirm({
-                title: `Deleting ${title}`,
-                message: `Are you sure you want to <b>delete</b> ${title}? This action cannot be undone.`,
-                confirmText: 'Sure',
-                type: 'is-danger',
-                hasIcon: true,
-                onConfirm: () => {
-                    this.$api[module].delete(id).then(res => {
-                        this.$buefy.toast.open(`${title} deleted!`)
-                        this.$router.replace({path: '/'})
-                    })
+        cleanData(data) {
+            let out = {}
+            Object.keys(data).forEach(i => {
+                if (data[i]) {
+                     if (Array.isArray(data[i])) {
+                        out[i] = data[i].map(x => x.id)
+                    } else if (typeof data[i] === 'object' && data[i].id) {
+                        out[i] = data[i].id
+                    } else {
+                        out[i] = data[i]
+                    }
                 }
             })
+            return out
         },
-        getVerb(VERB) {
-            switch (VERB) {
-                case 'REVIEW':
-                    return 'posted'
-                case 'VOTE':
-                    return 'voted for'
-                case 'COMMENT':
-                    return 'comment'
-                case 'CREATED':
-                    return 'posted'
-                case 'JOIN':
-                    return 'joined'
-                default:
-                    return ''
+    },
+    computed: {
+        currentUser: {
+            get() {
+                return this.$store.getters['auth/getUser']
+            },
+            set() {
+
             }
-        },
-        getAction(MODEL) {
-            switch (MODEL) {
-                case 'Compare':
-                    return 'a comparison'
-                case 'Review':
-                    return 'a review'
-                case 'User':
-                    return 'profile'
-                case 'Stack':
-                    return 'a stack'
-                default:
-                    return ''
-            }
-        },
-        getSlug(MODEL) {
-            switch (MODEL) {
-                case 'Compare':
-                    return 'compare'
-                case 'Review':
-                    return null
-                case 'User':
-                    return 'profile'
-                case 'Stack':
-                    return 'stack'
-                default:
-                    return ''
-            }
-        },
-        async addStack(form) {
-            if (this.$auth.loggedIn) {
-                if (this.adding && this.form.title) {
-                    let res = await this.$api.stack.post(form)
-                    this.$router.replace({path: `/stack/${res.slug}`})
-                } else if (!this.adding) {
-                    this.adding = true
-                } else if (form.title === null || form.title.length < 5) {
-                    this.$buefy.snackbar.open({
-                        duration: 3000,
-                        message: 'Please input stack name!!!',
-                        type: 'is-warning',
-                        position: 'is-bottom-right',
-                        actionText: 'OK',
-                        queue: true
-                    })
-                }
-            } else {
-                this.$buefy.snackbar.open({
-                    duration: 3000,
-                    message: 'Please login first!!!!',
-                    type: 'is-warning',
-                    position: 'is-bottom-right',
-                    actionText: 'OK',
-                    queue: true
-                })
-            }
-        },
+        }
     }
 })

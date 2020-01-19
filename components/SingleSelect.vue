@@ -1,15 +1,16 @@
 <template>
-    <b-field class="editable">
+    <b-field>
         <b-autocomplete
+            :loading="fetching"
             :size="size"
             v-model="name"
             :placeholder="placeholder"
             :keep-first="keepFirst"
             :open-on-focus="openOnFocus"
             :data="filteredTags"
-            field="title"
-            icon-pack="fa"
+            :field="field"
             :icon="icon"
+            @focus="$emit('focus')"
             @typing="getAsyncData"
             @keyup.enter.native="on_add(name)"
             @select="handle_select">
@@ -39,6 +40,14 @@
             icon: {
                 default: 'tag',
                 type: String
+            },
+            field: {
+                default: 'title',
+                type: String
+            },
+            addNew: {
+                default: false,
+                type: Boolean
             }
         },
         data() {
@@ -57,14 +66,16 @@
                 this.$emit('input', option)
             },
             async on_add(e) {
-                if (this.fetching || this.filteredTags.length) {
-                    return
-                }
-                if (typeof e === 'string') {
-                    this.selected = await this.$api[this.module].post({title: e})
-                    this.name = this.selected.title
-                } else {
+                if (this.addNew) {
+                    if (this.fetching || this.filteredTags.length) {
+                        return
+                    }
+                    if (typeof e === 'string') {
+                        this.selected = await this.$api[this.module].post({title: e})
+                        this.name = this.selected[this.field]
+                    } else {
 
+                    }
                 }
             },
             getAsyncData: debounce(function (name) {
@@ -82,7 +93,11 @@
         watch: {
             value() {
                 this.selected = this.value
-                this.name = this.selected.title
+                if (this.value) {
+                    this.name = this.selected[this.field]
+                } else {
+                    this.name = null
+                }
             }
         }
     }
