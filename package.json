@@ -1,0 +1,40 @@
+{
+    "name": "favdes",
+    "version": "1.0.0",
+    "description": "My glorious Nuxt.js project",
+    "author": "lamha",
+    "private": true,
+    "scripts": {
+        "dev": "nuxt",
+        "build": "nuxt build",
+        "start": "nuxt start",
+        "generate": "nuxt generate"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.12.0",
+        "@nuxtjs/auth": "^4.8.4",
+        "@nuxtjs/axios": "^5.9.0",
+        "@nuxtjs/dotenv": "^1.4.0",
+        "coffee-loader": "^0.9.0",
+        "coffeescript": "^2.4.1",
+        "cookie-universal-nuxt": "^2.1.0",
+        "lodash": "latest",
+        "mapbox-gl": "^1.6.1",
+        "moment": "^2.24.0",
+        "node-sass": "^4.13.0",
+        "nuxt": "^2.0.0",
+        "nuxt-buefy": "latest",
+        "pug": "2.0.3",
+        "pug-plain-loader": "^1.0.0",
+        "sass-loader": "^8.0.0",
+        "socket.io-client": "^2.3.0",
+        "vue": "latest",
+        "vue-mapbox": "^0.4.1",
+        "vue-world-map": "^0.1.1",
+        "vue2-google-maps": "^0.10.7",
+        "vuex": "^3.1.2"
+    },
+    "devDependencies": {
+        "cookieparser": "^0.1.0"
+    }
+}
