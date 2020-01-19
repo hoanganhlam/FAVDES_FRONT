@@ -1,19 +1,15 @@
 <template>
-    <section>
-        <b-field>
-            <b-upload v-model="dropFiles" :multiple="multiple" drag-drop @input="handleInput">
-                <section class="section">
-                    <div class="content has-text-centered">
-                        <p>
-                            <b-icon pack="fa" icon="upload" size="is-large"></b-icon>
-                        </p>
-                        <p v-if="text">{{text}}</p>
-                    </div>
-                </section>
-                <b-loading :is-full-page="false" :active.sync="isLoading" :can-cancel="true"></b-loading>
-            </b-upload>
-        </b-field>
-    </section>
+    <b-upload v-model="dropFiles" :multiple="multiple" drag-drop @input="handleInput">
+        <section class="section">
+            <div class="content has-text-centered">
+                <p>
+                    <b-icon pack="fa" icon="upload" size="is-large"></b-icon>
+                </p>
+                <p v-if="text">{{text}}</p>
+            </div>
+        </section>
+        <b-loading :is-full-page="false" :active.sync="isLoading" :can-cancel="true"></b-loading>
+    </b-upload>
 </template>
 
 <script>

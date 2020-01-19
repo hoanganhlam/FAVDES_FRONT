@@ -8,7 +8,7 @@
         <div class="section is-small hero">
             <div class="hero-body">
                 <div class="container small">
-                    <div class="card">
+                    <div class="card" v-if="address.address_components.length">
                         <div class="card-content">
                             <div class="content">
                                 <span v-for="(c, i) in address.address_components" :key="i">
@@ -68,7 +68,7 @@
                 page: query.page ? Number.parseInt(query.page) : 1
             }
             let activityRes = await $api.activity.list(queries)
-            res.address_components = res.address_components.reverse()
+            res.address_components = res.address_components ? res.address_components.reverse() : []
             return {
                 address: res,
                 activityRes,
