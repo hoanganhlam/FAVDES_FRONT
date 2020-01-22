@@ -3,7 +3,7 @@
         <div class="card-content" style="padding-bottom: 0;" v-if="layout !== 'square'">
             <div class="media">
                 <div class="media-left">
-                    <Avatar v-if="actor.media" class="is-32x32" :value="actor.media"></Avatar>
+                    <Avatar class="is-32x32" :value="actor.media"></Avatar>
                 </div>
                 <div class="media-content" style="line-height: 1.2;">
                     <div>
@@ -141,8 +141,7 @@
             },
             items() {
                 if (this.activity.address) {
-                    let destinations = this.activity.address.destinations
-                    return destinations
+                    return this.activity.address.destinations
                 }
                 return []
             }

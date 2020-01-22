@@ -70,8 +70,8 @@
             </div>
         </div>
         <div class="hero is-small">
-            <div class="container">
-                <div class="hero-body">
+            <div class="hero-body">
+                <div class="container">
                     <div class="columns is-multiline">
                         <div class="column is-4" v-for="(a, i) in activityRes.results" :key="i">
                             <activity layout="square" :value="a"></activity>

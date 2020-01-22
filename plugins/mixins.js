@@ -40,6 +40,9 @@ Vue.mixin({
             return string.charAt(0).toUpperCase() + string.slice(1);
         },
         convertName(user) {
+            if (user.profile && user.profile.nick) {
+                return user.profile.nick
+            }
             if (user.first_name || user.last_name) {
                 return user.first_name + ' ' + user.last_name
             }
