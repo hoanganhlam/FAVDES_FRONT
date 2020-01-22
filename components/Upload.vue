@@ -43,6 +43,7 @@
                 }
                 this.$emit('done', results)
                 this.isLoading = false
+                this.dropFiles = []
             },
             async beforeUpload(file) {
                 let formData = new FormData()
