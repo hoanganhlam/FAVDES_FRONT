@@ -1,10 +1,10 @@
 <template>
-    <div class="section hero is-small">
+    <div class="profile section hero is-small">
         <div class="hero-body">
             <div class="container">
-                <div class="columns">
-                    <div class="column is-3 has-text-left">
-                        <Avatar class="is-128x128" :is-updating="updating" v-model="profile.media"></Avatar>
+                <div class="columns is-mobile">
+                    <div class="column is-2 has-text-left">
+                        <Avatar :is-updating="updating" v-model="profile.media"></Avatar>
                     </div>
                     <div class="column">
                         <div class="media">
@@ -23,10 +23,7 @@
                             </div>
                             <div class="media-right">
                                 <div class="buttons">
-                                    <div class="button">
-                                        <b-icon size="is-small" icon="rss"></b-icon>
-                                        <span>Follow</span>
-                                    </div>
+                                    <follow model="user" :pk="user.id" :value="user.is_following"></follow>
                                     <b-dropdown position="is-bottom-left" aria-role="menu">
                                         <div class="button" slot="trigger">
                                             <b-icon icon="dots-vertical" size="is-small"></b-icon>
@@ -50,20 +47,6 @@
                         <div v-if="updating">
                             <div class="button is-primary is-medium" @click="updateProfile">Save</div>
                         </div>
-                        <div class="meta" v-else>
-                            <div class="item">
-                                <div class="title">773k</div>
-                                <small>Views</small>
-                            </div>
-                            <div class="item">
-                                <div class="title">773k</div>
-                                <small>Views</small>
-                            </div>
-                            <div class="item">
-                                <div class="title">773k</div>
-                                <small>Views</small>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <b-loading :is-full-page="false" :active.sync="loading" :can-cancel="true"></b-loading>
@@ -72,8 +55,8 @@
         <div class="hero is-small">
             <div class="hero-body">
                 <div class="container">
-                    <div class="columns is-multiline">
-                        <div class="column is-4" v-for="(a, i) in activityRes.results" :key="i">
+                    <div class="columns is-multiline is-mobile">
+                        <div class="column is-half-mobile is-one-third-desktop" v-for="(a, i) in activityRes.results" :key="i">
                             <activity layout="square" :value="a"></activity>
                         </div>
                     </div>

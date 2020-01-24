@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div class="card-content">
-            <div class="columns is-multiline is-mobile is-gapless" v-if="!$auth.loggedIn">
+            <div class="columns is-multiline is-mobile is-gapless" v-if="!currentUser">
                 <div class="column is-4" v-for="i in 9" :key="i">
                     <figure class="image">
                         <img :src="`https://i.pravatar.cc/300?img=${i}`" alt="">
@@ -38,7 +38,7 @@
         },
         methods: {
             async fetch() {
-                this.response = await this.$api.user.list({})
+                this.response = await this.$api.user.list({page_size: 5})
             }
         },
         async created() {

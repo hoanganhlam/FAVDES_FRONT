@@ -53,6 +53,18 @@ const apis_module = [
         methods: {}
     },
     {
+        space: 'media',
+        endpoint: 'media-taxonomies',
+        name: 'media_taxonomy',
+        methods: {}
+    },
+    {
+        space: 'media',
+        endpoint: 'media-comments',
+        name: 'media_comment',
+        methods: {}
+    },
+    {
         space: 'destination',
         endpoint: 'addresses',
         name: 'address',
@@ -82,6 +94,11 @@ const apis_module = [
                 endpoint: 'vote'
             }
         ]
+    },
+    {
+        space: 'activity',
+        endpoint: 'follow',
+        name: 'follow'
     },
     {
         space: 'destination',

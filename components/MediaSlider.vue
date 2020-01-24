@@ -6,7 +6,7 @@
                     @click="select(image)"
                     class="image 1by1 selectable"
                     v-bind:class="{'selected': isSelected(image) !== -1}">
-                    <img :src="mediaDomain + (image.sizes ? image.sizes['96_96'] : image.path)" alt="">
+                    <img :src="mediaDomain + (image.sizes ? image.sizes['270_270'] : image.path)" alt="">
                     <i v-if="isSelected(image) !== -1" class="fas fa-check"></i>
                 </div>
             </div>

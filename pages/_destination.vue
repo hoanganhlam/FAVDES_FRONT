@@ -3,8 +3,8 @@
         <section class="section hero is-small is-light" v-if="typeof $route.params.flag === 'undefined'">
             <div class="hero-body">
                 <div class="container">
-                    <div class="media">
-                        <div class="media-content">
+                    <div class="columns">
+                        <div class="column">
                             <div>
                                 <p v-if="subtitle" style="margin-bottom: 0">{{subtitle}}</p>
                                 <h1 class="title is-spaced"
@@ -32,8 +32,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="media-right">
-                            <div class="buttons">
+                        <div class="column is-3">
+                            <div class="buttons" style="justify-content: flex-end;">
                                 <b-dropdown aria-role="list" style="margin-right: 0.5rem">
                                     <button class="button" slot="trigger">
                                         <b-icon size="is-small" pack="fa" icon="fire"></b-icon>
@@ -80,7 +80,6 @@
 <script>
     export default {
         name: 'HomePage',
-        watchQuery: true,
         async asyncData({$api, params, query}) {
             let destination = null, activityRes = null
             let queries = {

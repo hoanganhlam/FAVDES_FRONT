@@ -28,4 +28,12 @@
     .bar {
         width: 45px;
     }
+    .profile .title {
+        font-size: 1rem;
+    }
+
+    .gallery.layout-square {
+        --columns: 1;
+        --content-width: 157px;
+    }
 }

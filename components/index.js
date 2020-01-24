@@ -11,7 +11,11 @@ import Editable from "./Editable";
 import Upload from "./Upload";
 import Activity from "./Activity";
 import Avatar from "./Avatar";
+import Follow from "./Follow";
+import MediaViewer from "./MediaViewer";
 
+Vue.component('media-viewer', MediaViewer)
+Vue.component('follow', Follow)
 Vue.component('Avatar', Avatar)
 Vue.component('Upload', Upload)
 Vue.component('editable', Editable)

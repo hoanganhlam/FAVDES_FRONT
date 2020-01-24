@@ -40,7 +40,7 @@
         <div class="columns is-mobile is-multiline">
             <div class="column is-3" v-for="p in form.medias" :key="p.id">
                 <div class="image">
-                    <img :src="p.sizes['200_200']" alt="">
+                    <img :src="p.sizes['270_270']" alt="">
                 </div>
             </div>
             <div class="column" v-bind:class="{'is-3': form.medias.length}">

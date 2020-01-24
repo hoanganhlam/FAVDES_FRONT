@@ -7,14 +7,12 @@
                 <div class="comment" v-for="c in commentRes.results" :key="c.id">
                     <div class="media">
                         <div class="media-left">
-                            <figure class="image is-48x48 avatar">
-                                <b-icon pack="fa" icon="user-circle" size="is-large"></b-icon>
-                            </figure>
+                            <avatar class="is-48x48" v-model="c.user.profile.media"></avatar>
                         </div>
                         <div class="media-content">
                             <div class="author">
                                 <b>
-                                    <n-link :to="`/member/`">LA</n-link>
+                                    <n-link :to="`/member/${c.user.username}`">{{convertName(c.user)}}</n-link>
                                 </b>
                             </div>
                             <small>{{timeSince(c.created)}}</small>
@@ -50,32 +48,33 @@
             </div>
         </div>
     </div>
-    <div v-else>
-        <activity :layout="layout" v-for="a in activityRes.results" :key="a.id" :value="a"></activity>
+    <div v-else-if="!loading">
+        <activity :layout="layout" v-for="a in data.results" :key="a.id" :value="a"></activity>
         <b-pagination
-            :total="activityRes.count"
+            :total="data.count"
             :current.sync="queries.page"
             :per-page="10">
             <b-pagination-button
                 slot-scope="props"
+                @click.native="fetch(props.page.number)"
                 :page="props.page"
                 :id="`page${props.page.number}`"
                 tag="router-link"
                 :to="`?page=${props.page.number}`">
                 {{props.page.number}}
             </b-pagination-button>
-
             <b-pagination-button
                 slot="previous"
+                @click.native="fetch(props.page.number)"
                 slot-scope="props"
                 :page="props.page"
                 tag="router-link"
                 :to="`?page=${props.page.number}`">
                 Previous
             </b-pagination-button>
-
             <b-pagination-button
                 slot="next"
+                @click.native="fetch(props.page.number)"
                 slot-scope="props"
                 :page="props.page"
                 tag="router-link"
@@ -83,6 +82,9 @@
                 Next
             </b-pagination-button>
         </b-pagination>
+    </div>
+    <div v-else>
+        <div class="skeleton" v-for="i in 10" :key="i"></div>
     </div>
 </template>
 <script>
@@ -109,7 +111,6 @@
                 type: Object
             }
         },
-        watchQuery: true,
         head() {
             return {
                 title: this.title
@@ -139,13 +140,23 @@
         data() {
             return {
                 posts: [],
-                queries: this.q
+                queries: this.q,
+                loading: false,
+                data: this.activityRes
             }
         },
         methods: {
             async submit() {
                 let res = await this.$api.comment.post(this.comment)
-            }
+                this.commentRes.results.push(res)
+            },
+            async fetch(page) {
+                this.toTop()
+                this.queries.page = page
+                this.loading = true
+                this.data = await this.$api.activity.list(this.queries)
+                this.loading = false
+            },
         },
         computed: {
             temp() {

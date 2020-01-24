@@ -89,6 +89,7 @@
                 </div>
             </section>
         </b-modal>
+        <media-viewer></media-viewer>
     </div>
 </template>
 
@@ -116,3 +117,40 @@
         }
     }
 </script>
+
+<style lang="scss">
+    .pop-gallery {
+        .main-image {
+            text-align: center;
+            position: relative;
+
+            img {
+                max-height: 75vh;
+            }
+        }
+
+        .hero-head {
+            .navbar {
+                border-bottom: 1px solid #EEE;
+            }
+
+            .container {
+                padding: 0;
+            }
+        }
+
+        .hero-foot {
+            padding-bottom: 1rem;
+        }
+
+        .navbar-menu {
+            display: flex;
+
+            .navbar-end {
+                -webkit-box-pack: end;
+                justify-content: flex-end;
+                margin-left: auto;
+            }
+        }
+    }
+</style>

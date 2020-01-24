@@ -1,8 +1,8 @@
 <template>
-    <n-link :to="to">
+    <div>
         <div :class="boxClass" style="padding-bottom: 0">
             <div v-if="value.medias.length" :class="galleryClass">
-                <div v-for="(img, i) in photos" :class="`gallery__item gallery__item--${i + 1}`">
+                <div v-for="(img, i) in photos" :class="`clickable gallery__item gallery__item--${i + 1}`" @click="handleClick(i)">
                     <img class="gallery__img" :src="src(i)" :alt="img.title">
                 </div>
             </div>
@@ -13,10 +13,14 @@
             </div>
         </div>
         <div class="card-content content" v-bind:class="{'inside hover': layout === 'square'}">
-            <h3 style="margin-bottom: 10px" class="title is-6" v-if="value.title">{{value.title}}</h3>
-            <p v-if="value.content">{{value.content}}</p>
+            <h3 style="margin-bottom: 10px" class="title is-6" v-if="value.title">
+                <n-link :to="to">{{value.title}}</n-link>
+            </h3>
+            <p v-if="value.content">
+                <n-link :to="to">{{value.content}}</n-link>
+            </p>
         </div>
-    </n-link>
+    </div>
 </template>
 
 <script>
@@ -37,16 +41,23 @@
             src(index) {
                 let out = null
                 let size = this.value.medias.length
-                if (size === 1 && !['full', 'minimize'].includes(this.layout)) {
-                    out = this.value.medias[0].path
+                if (size === 1) {
+                    out = this.value.medias[0].sizes['resize']
+                } else if (!['full', 'minimize'].includes(this.layout)) {
+                    out = this.value.medias[0].sizes['resize']
+                } else if (['full', 'square'].includes(this.layout)) {
+                    out = this.value.medias[index].sizes['270_270']
                 } else {
-                    if (['full', 'square'].includes(this.layout)) {
-                        out = this.value.medias[index].sizes['200_200']
-                    } else {
-                        out = this.value.medias[index].sizes['530_530']
-                    }
+                    out = this.value.medias[index].sizes['540_540']
                 }
                 return this.cleanURI(out)
+            },
+            handleClick(i) {
+                this.$store.dispatch('media/setData', {
+                    medias: this.value.medias,
+                    index: i,
+                    user: this.value.user
+                })
             }
         },
         computed: {
