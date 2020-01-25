@@ -17,7 +17,13 @@
 }
 
 @media all and (max-width: 736px) {
-
+    .pop-gallery {
+        .hero-head {
+            .container {
+                padding: 0;
+            }
+        }
+    }
 }
 
 @media all and (max-width: 480px) {
@@ -25,8 +31,46 @@
     .header {
         margin-left: 45px;
     }
+    .header {
+        .container {
+            padding: 0;
+        }
+    }
+
     .bar {
-        width: 45px;
+        z-index: 39;
+        width: 0;
+        overflow: hidden;
+        padding: 0;
+
+        .button.fixed {
+            display: unset;
+            position: fixed;
+            left: 1rem;
+            top: 0.45rem;
+        }
+
+        .part-1 {
+            position: fixed;
+            left: 4rem;
+
+            .image {
+                width: 45px;
+            }
+        }
+
+        &.is-active {
+            width: 45px;
+            padding: 0 0.5rem 0.5rem;
+
+            .button.fixed {
+                left: 3.5rem;
+            }
+
+            .part-1 {
+                position: unset;
+            }
+        }
     }
     .profile .title {
         font-size: 1rem;
@@ -34,6 +78,11 @@
 
     .gallery.layout-square {
         --columns: 1;
-        --content-width: 157px;
+        --content-width: 180px;
+    }
+
+    .header,
+    .main-content {
+        margin-left: 0;
     }
 }

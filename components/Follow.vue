@@ -8,10 +8,7 @@
     export default {
         name: "Follow",
         props: {
-            value: {
-                type: Boolean,
-                default: false
-            },
+            value: {},
             pk: {
                 type: Number,
                 default: 0
@@ -36,6 +33,18 @@
                     object_id: this.pk
                 })
                 this.loading = false
+            }
+        },
+        created() {
+            if (typeof this.value !== 'boolean') {
+                this.$axios.get('/activity/is-following/', {
+                    params: {
+                        contentType: this.content_type,
+                        objectId: this.pk
+                    }
+                }).then(res => {
+                    this.isFollowing = res.data
+                })
             }
         }
     }

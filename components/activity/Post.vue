@@ -63,7 +63,7 @@
         computed: {
             photos() {
                 if (this.layout === 'minimize') {
-                    return this.value.medias.slice(0, 3)
+                    return this.value.medias.slice(0, 2)
                 } else if (this.layout === 'square' && this.value.medias.length) {
                     return this.value.medias.slice(0, 1)
                 }

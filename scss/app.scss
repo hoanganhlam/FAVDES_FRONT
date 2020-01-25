@@ -43,10 +43,6 @@ $section-padding: 1em 0;
         margin-bottom: 1rem;
     }
 
-    .title {
-        margin-bottom: 0;
-    }
-
     .inside {
         position: absolute;
         bottom: 0;
@@ -266,6 +262,10 @@ img {
 
     .part-3 {
     }
+
+    .button.fixed {
+        display: none;
+    }
 }
 
 .main-content {
@@ -404,6 +404,14 @@ img.is-round {
         80px 0,
         80px 40px;
     }
+}
+
+.author {
+    font-weight: bold;
+}
+
+.columns.is-variable .column {
+    padding: var(--columnGap);
 }
 
 @import "grid";

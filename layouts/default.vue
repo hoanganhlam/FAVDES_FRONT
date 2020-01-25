@@ -46,7 +46,7 @@
         <main class="main-content">
             <nuxt/>
         </main>
-        <div class="bar">
+        <div class="bar" v-bind:class="{'is-active': showBar}">
             <div class="part-1">
                 <div class="image">
                     <n-link to="/"><img src="/logo.png" alt="9Destination"></n-link>
@@ -74,6 +74,9 @@
                     <b-icon icon="settings-outline"></b-icon>
                 </div>
             </div>
+            <div class="button fixed" @click="showBar = !showBar">
+                <b-icon :icon="showBar ? 'chevron-left' : 'chevron-right'"></b-icon>
+            </div>
         </div>
         <footer class="footer">
             <div class="content has-text-centered">
@@ -100,7 +103,8 @@
                 isActive: false,
                 login: true,
                 search: '',
-                openSearch: false
+                openSearch: false,
+                showBar: false
             }
         },
         methods: {
@@ -114,43 +118,20 @@
                 }
                 return this.$route.path.includes(flag)
             }
+        },
+        watch: {
+            $route() {
+                this.toTop()
+                this.$store.dispatch('media/setData', {
+                    medias: [],
+                    index: 0,
+                    user: null
+                })
+            }
         }
     }
 </script>
 
 <style lang="scss">
-    .pop-gallery {
-        .main-image {
-            text-align: center;
-            position: relative;
 
-            img {
-                max-height: 75vh;
-            }
-        }
-
-        .hero-head {
-            .navbar {
-                border-bottom: 1px solid #EEE;
-            }
-
-            .container {
-                padding: 0;
-            }
-        }
-
-        .hero-foot {
-            padding-bottom: 1rem;
-        }
-
-        .navbar-menu {
-            display: flex;
-
-            .navbar-end {
-                -webkit-box-pack: end;
-                justify-content: flex-end;
-                margin-left: auto;
-            }
-        }
-    }
 </style>
