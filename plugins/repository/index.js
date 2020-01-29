@@ -78,6 +78,12 @@ const apis_module = [
     },
     {
         space: 'destination',
+        endpoint: 'dars',
+        name: 'dar',
+        methods: {}
+    },
+    {
+        space: 'destination',
         endpoint: 'addresses',
         name: 'address',
         methods: {}

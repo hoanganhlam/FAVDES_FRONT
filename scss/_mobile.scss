@@ -14,6 +14,13 @@
 }
 
 @media all and (max-width: 980px) {
+
+}
+
+@media all and (min-width: 736px) {
+    .is-right-desktop {
+        justify-content: flex-end;
+    }
 }
 
 @media all and (max-width: 736px) {

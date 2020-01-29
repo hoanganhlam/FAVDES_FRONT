@@ -16,7 +16,9 @@ import MediaViewer from "./MediaViewer";
 import Comment from "./Comment";
 import ActivityList from "./activity/List";
 import ActivityDetail from "./activity/Detail";
+import Thumbnail from "./Thumbnail";
 
+Vue.component('thumbnail', Thumbnail)
 Vue.component('comment', Comment)
 Vue.component('media-viewer', MediaViewer)
 Vue.component('follow', Follow)

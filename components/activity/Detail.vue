@@ -1,6 +1,6 @@
 <template>
     <div v-if="activity">
-        <activity :value="activity"></activity>
+        <activity :value="activity"/>
         <comment model="activity" :object-id="activity.id"></comment>
     </div>
 </template>

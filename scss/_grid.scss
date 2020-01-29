@@ -1,5 +1,5 @@
 .gallery {
-    --content-width: 530px;
+    --content-width: 570px;
     --gutter: 1rem;
     --columns: 3;
     --row-size: calc(
@@ -23,6 +23,16 @@
 
     &.layout-full {
         --columns: 2;
+    }
+
+    &.layout-part {
+        --columns: 3;
+        .gallery__item--1 {
+            grid-column-start: 1;
+            grid-column-end: 4;
+            grid-row-start: 1;
+            grid-row-end: 1;
+        }
     }
 
     &.layout-square {

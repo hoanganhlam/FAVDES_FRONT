@@ -23,7 +23,6 @@ export default {
     ** Global CSS
     */
     css: [
-        '@fortawesome/fontawesome-free/css/all.css',
         '@/scss/app.scss'
     ],
     /*

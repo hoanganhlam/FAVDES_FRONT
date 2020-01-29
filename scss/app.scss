@@ -28,6 +28,8 @@ $card-media-margin: 0.5rem;
 $progress-border-radius: 2px;
 $navbar-item-img-max-height: 1.5em;
 $section-padding: 1em 0;
+$tabs-link-active-color: #FFF;
+
 @import "~bulma/bulma";
 
 .container {
@@ -412,6 +414,13 @@ img.is-round {
 
 .columns.is-variable .column {
     padding: var(--columnGap);
+}
+
+li.is-active a {
+    background-color: #3273dc;
+    border-color: #3273dc;
+    color: #fff;
+    z-index: 1;
 }
 
 @import "grid";

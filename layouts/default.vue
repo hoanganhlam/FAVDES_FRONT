@@ -11,7 +11,7 @@
                                              v-model="search"></b-input>
                                     <p class="control">
                                         <b-button class="button is-success">
-                                            <b-icon pack="fa" icon="search" size="is-small"></b-icon>
+                                            <b-icon icon="magnify" size="is-small"></b-icon>
                                         </b-button>
                                     </p>
                                 </b-field>
@@ -56,11 +56,6 @@
                 <div class="elm">
                     <n-link to="/" class="button is-text" v-bind:class="{'is-primary': isPrimary('destination')}">
                         <b-icon icon="rss"></b-icon>
-                    </n-link>
-                </div>
-                <div class="elm">
-                    <n-link to="/world" class="button is-text" v-bind:class="{'is-primary': isPrimary('world')}">
-                        <b-icon icon="earth"></b-icon>
                     </n-link>
                 </div>
                 <div class="elm">

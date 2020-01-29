@@ -3,11 +3,12 @@
         <section class="section">
             <div class="content has-text-centered">
                 <p>
-                    <b-icon pack="fa" icon="upload" size="is-large"></b-icon>
+                    <b-icon icon="cloud-upload" size="is-large"></b-icon>
                 </p>
                 <p v-if="text">{{text}}</p>
             </div>
         </section>
+        <div></div>
         <b-loading :is-full-page="false" :active.sync="isLoading" :can-cancel="true"></b-loading>
     </b-upload>
 </template>

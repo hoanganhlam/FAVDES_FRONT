@@ -1,55 +1,57 @@
 <template>
-    <div class="profile section hero is-small">
-        <div class="hero-body">
-            <div class="container">
-                <div class="columns is-mobile">
-                    <div class="column is-2 has-text-left">
-                        <Avatar :is-updating="updating" v-model="profile.media"></Avatar>
-                    </div>
-                    <div class="column">
-                        <div class="media">
-                            <div class="media-content">
-                                <h1 class="title" v-if="!updating">{{convertName(user)}}</h1>
-                                <b-field v-else class="title" grouped>
-                                    <b-field expanded>
-                                        <b-input class="is-text" placeholder="First name"
-                                                 v-model="user.first_name"></b-input>
+    <div class="profile">
+        <div class="section hero is-small is-light">
+            <div class="hero-body">
+                <div class="container small">
+                    <div class="columns is-mobile">
+                        <div class="column is-2 has-text-left">
+                            <Avatar :is-updating="updating" v-model="profile.media"></Avatar>
+                        </div>
+                        <div class="column">
+                            <div class="media">
+                                <div class="media-content">
+                                    <h1 class="title is-4" v-if="!updating">{{convertName(user)}}</h1>
+                                    <b-field v-else class="title" grouped>
+                                        <b-field expanded>
+                                            <b-input class="is-text" placeholder="First name"
+                                                     v-model="user.first_name"></b-input>
+                                        </b-field>
+                                        <b-field expanded>
+                                            <b-input class="is-text" placeholder="Last name"
+                                                     v-model="user.last_name"></b-input>
+                                        </b-field>
                                     </b-field>
-                                    <b-field expanded>
-                                        <b-input class="is-text" placeholder="Last name"
-                                                 v-model="user.last_name"></b-input>
-                                    </b-field>
-                                </b-field>
-                            </div>
-                            <div class="media-right">
-                                <div class="buttons">
-                                    <follow model="user" :pk="user.id" :value="user.is_following"></follow>
-                                    <b-dropdown position="is-bottom-left" aria-role="menu">
-                                        <div class="button" slot="trigger">
-                                            <b-icon icon="dots-vertical" size="is-small"></b-icon>
-                                        </div>
-                                        <b-dropdown-item aria-role="listitem" @click="isUpdate = !isUpdate">
-                                            <b-icon size="is-small" icon="pen"></b-icon>
-                                            <span>Update Profile</span>
-                                        </b-dropdown-item>
-                                        <b-dropdown-item aria-role="listitem" @click="$auth.logout()">
-                                            <b-icon size="is-small" icon="exit-to-app"></b-icon>
-                                            <span>Logout</span>
-                                        </b-dropdown-item>
-                                    </b-dropdown>
+                                </div>
+                                <div class="media-right">
+                                    <div class="buttons">
+                                        <follow model="user" :pk="user.id" :value="user.is_following"></follow>
+                                        <b-dropdown position="is-bottom-left" aria-role="menu">
+                                            <div class="button" slot="trigger">
+                                                <b-icon icon="dots-vertical" size="is-small"></b-icon>
+                                            </div>
+                                            <b-dropdown-item aria-role="listitem" @click="isUpdate = !isUpdate">
+                                                <b-icon size="is-small" icon="pen"></b-icon>
+                                                <span>Update Profile</span>
+                                            </b-dropdown-item>
+                                            <b-dropdown-item aria-role="listitem" @click="$auth.logout()">
+                                                <b-icon size="is-small" icon="exit-to-app"></b-icon>
+                                                <span>Logout</span>
+                                            </b-dropdown-item>
+                                        </b-dropdown>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="subtitle">
-                            <editable placeholder="Bio" type="textarea" :rows="2" v-model="profile.description"
-                                      :is-updating="updating"/>
-                        </div>
-                        <div v-if="updating">
-                            <div class="button is-primary is-medium" @click="updateProfile">Save</div>
+                            <div class="subtitle">
+                                <editable placeholder="Bio" type="textarea" :rows="2" v-model="profile.description"
+                                          :is-updating="updating"/>
+                            </div>
+                            <div v-if="updating">
+                                <div class="button is-primary is-medium" @click="updateProfile">Save</div>
+                            </div>
                         </div>
                     </div>
+                    <b-loading :is-full-page="false" :active.sync="loading" :can-cancel="true"></b-loading>
                 </div>
-                <b-loading :is-full-page="false" :active.sync="loading" :can-cancel="true"></b-loading>
             </div>
         </div>
         <div class="hero is-small">

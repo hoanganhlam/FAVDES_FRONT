@@ -13,7 +13,7 @@
                     </div>
                     <div>
                         <small>
-                            <n-link :to="activity.slug">{{timeSince(activity.created)}}</n-link>
+                            <n-link :to="`/posts/${activity.id}`">{{timeSince(activity.created)}}</n-link>
                         </small>
                         <small>
                             <b-icon size="is-small" icon="menu-right"></b-icon>
@@ -31,8 +31,23 @@
             </div>
         </div>
         <action-object :to="activity.slug" v-if="action_object" :value="action_object" :layout="layout"/>
-        <div v-if="items.length && layout !== 'square'" class="card-content" style="padding-top: 0">
-            <n-link v-if="target" class="tag" :to="`/${target.slug}`">{{target.title}}</n-link>
+        <div v-if="items.length && layout !== 'square' && activity.address" class="card-content" style="padding-top: 0">
+            <div class="tags" style="margin-bottom: 0">
+                <n-link class="tag" v-for="d in activity.address.destinations" :to="`/${d.slug}`" :key="d.id">
+                    <b-icon icon="map-marker" size="is-small"></b-icon>
+                    <span>{{d.title}}</span>
+                </n-link>
+            </div>
+            <div class="tags">
+                <n-link
+                    class="tag"
+                    v-for="t in activity.taxonomies"
+                    :to="`/${primaryD && t.flag === 'PRIMARY' ? primaryD.slug : 'hashtag'}/${t.slug}`"
+                    :key="t.id">
+                    <b-icon size="is-small" icon="pound"></b-icon>
+                    <span>{{t.title}}</span>
+                </n-link>
+            </div>
         </div>
         <div v-if="layout !== 'square'" class="card-content" style="padding-top: 0;">
             <div class="level is-mobile">
@@ -40,11 +55,11 @@
                     <div class="buttons">
                         <div class="button is-small" @click="vote()"
                              v-bind:class="{'is-success': activity['is_voted'], 'is-loading': loading.vote}">
-                            <b-icon size="is-small" pack="fa" icon="caret-up"></b-icon>
+                            <b-icon size="is-small" icon="chevron-up"></b-icon>
                             <span>{{activity["total_vote"]}}</span>
                         </div>
                         <div class="button is-small">
-                            <b-icon size="is-small" pack="fa" icon="comment-alt"></b-icon>
+                            <b-icon size="is-small" icon="comment"></b-icon>
                             <span>0</span>
                         </div>
                     </div>
@@ -144,6 +159,9 @@
                     return this.activity.address.destinations
                 }
                 return []
+            },
+            primaryD() {
+                return this.activity.address && this.activity.address.destinations.length ? this.activity.address.destinations[0] : null
             }
         }
     }

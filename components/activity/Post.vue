@@ -71,8 +71,10 @@
             },
             galleryClass() {
                 let lu = this.value.medias.length
-                if (['full', 'minimize'].includes(this.layout)) {
+                if (this.layout === 'full') {
                     lu = 'full'
+                } else if (this.layout === 'minimize' && this.value.medias.length === 1) {
+                    lu = 'part'
                 } else if (this.layout === 'square') {
                     lu = 'square'
                 }
