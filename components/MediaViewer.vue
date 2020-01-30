@@ -12,8 +12,8 @@
                                         <div class="button" @click="handleClose">
                                             <b-icon size="is-small" icon="chevron-left"></b-icon>
                                         </div>
-                                        <div class="button is-text" v-if="user">
-                                            <user-card :value="user"></user-card>
+                                        <div class="button is-text" v-if="media.user">
+                                            <user-card :value="media.user"></user-card>
                                         </div>
                                     </div>
                                 </div>
@@ -67,10 +67,7 @@
                     <div class="columns">
                         <div class="column">
                             <div>
-                                <h1 class="title is-5">
-                                    <editable icon="text" :rows="2" type="textarea" :is-updating="updating"
-                                              v-model="media.title"/>
-                                </h1>
+                                <p><editable icon="text" :rows="2" type="textarea" :is-updating="updating" v-model="media.title"/></p>
                                 <p class="subtitle">
                                     <editable icon="text" :rows="2" type="textarea" :is-updating="updating"
                                               v-model="media.description"/>

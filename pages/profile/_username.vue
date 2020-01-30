@@ -57,8 +57,15 @@
         <div class="hero is-small">
             <div class="hero-body">
                 <div class="container">
+                    <div class="tabs is-centered">
+                        <ul>
+                            <li class="is-active">{{user.statistic.activity}} posts</li>
+                            <li>{{user.statistic.follower}} followers</li>
+                            <li>{{user.statistic.following}} following</li>
+                        </ul>
+                    </div>
                     <div class="columns is-multiline is-mobile">
-                        <div class="column is-half-mobile is-one-third-desktop" v-for="(a, i) in activityRes.results" :key="i">
+                        <div class="column is-4" v-for="(a, i) in activityRes.results" :key="i">
                             <activity layout="square" :value="a"></activity>
                         </div>
                     </div>
@@ -128,7 +135,25 @@
         data() {
             return {
                 isUpdate: false,
-                loading: false
+                loading: false,
+                activeTab: 0,
+                baseTabs: [
+                    {
+                        label: 'Pictures',
+                        content: 'Lorem ipsum dolor sit amet.',
+                        displayed: true,
+                    },
+                    {
+                        label: 'Music',
+                        content: 'Lorem ipsum dolor sit amet.',
+                        displayed: this.showMusic,
+                    },
+                    {
+                        label: 'Videos',
+                        content: 'Lorem ipsum dolor sit amet.',
+                        displayed: true,
+                    }
+                ]
             }
         },
         methods: {

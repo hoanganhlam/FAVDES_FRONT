@@ -41,14 +41,10 @@
             src(index) {
                 let out = null
                 let size = this.value.medias.length
-                if (size === 1) {
-                    out = this.value.medias[0].sizes['resize']
-                } else if (!['full', 'minimize'].includes(this.layout)) {
-                    out = this.value.medias[0].sizes['resize']
-                } else if (['full', 'square'].includes(this.layout)) {
+                if (['square'].includes(this.layout)) {
                     out = this.value.medias[index].sizes['270_270']
                 } else {
-                    out = this.value.medias[index].sizes['540_540']
+                    out = this.value.medias[index].sizes['resize']
                 }
                 return this.cleanURI(out)
             },

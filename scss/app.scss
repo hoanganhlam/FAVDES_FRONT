@@ -148,10 +148,6 @@ $tabs-link-active-color: #FFF;
     }
 }
 
-.section:last-child {
-    margin-bottom: 2rem;
-}
-
 img {
     margin-bottom: -5px;
 }
@@ -171,7 +167,7 @@ img {
     .upload-draggable {
         border-radius: 0;
         width: 100%;
-        height: 100%;
+        height: fit-content;
         border-color: #efefef;
         border-width: 2px;
     }
@@ -421,6 +417,15 @@ li.is-active a {
     border-color: #3273dc;
     color: #fff;
     z-index: 1;
+}
+
+.fixed {
+    position: fixed;
+
+    &.right {
+        right: 1rem;
+        bottom: 1rem;
+    }
 }
 
 @import "grid";

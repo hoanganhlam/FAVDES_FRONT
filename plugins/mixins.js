@@ -10,7 +10,7 @@ Vue.mixin({
     },
     methods: {
         timeSince(date) {
-            let seconds = moment().diff(date, 'seconds', false);
+            let seconds = moment().diff(this.momentTime(date), 'seconds', false);
             return this.convertTime(seconds)
         },
         convertTime(seconds) {
@@ -65,6 +65,15 @@ Vue.mixin({
                 }
             })
             return out
+        },
+        convertDate(date) {
+            if (date) {
+                return new Date(date)
+            }
+            return null
+        },
+        momentTime(date) {
+            return moment.utc(date, 'YYYY-MM-DDTHH:mm')
         },
     },
     computed: {

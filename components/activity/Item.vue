@@ -53,10 +53,10 @@
             <div class="level is-mobile">
                 <div class="level-left">
                     <div class="buttons">
-                        <div class="button is-small" @click="vote()"
-                             v-bind:class="{'is-success': activity['is_voted'], 'is-loading': loading.vote}">
+                        <div class="button is-small" @click="doVote()"
+                             v-bind:class="{'is-success': vote['is_voted'], 'is-loading': loading.vote}">
                             <b-icon size="is-small" icon="chevron-up"></b-icon>
-                            <span>{{activity["total_vote"]}}</span>
+                            <span>{{vote["total"]}}</span>
                         </div>
                         <div class="button is-small">
                             <b-icon size="is-small" icon="comment"></b-icon>
@@ -95,6 +95,10 @@
                 test: 0,
                 loading: {
                     vote: false
+                },
+                vote: {
+                    total: 0,
+                    is_voted: false
                 }
             }
         },
@@ -104,14 +108,14 @@
             }
         },
         methods: {
-            async vote() {
+            async doVote() {
                 this.loading.vote = true
                 let res = await this.$api.activity.vote(this.activity.id, {})
-                this.activity.is_voted = res.result
+                this.vote.is_voted = res.result
                 if (res.result) {
-                    this.activity["total_vote"]++
+                    this.vote["total"]++
                 } else {
-                    this.activity["total_vote"]--
+                    this.vote["total"]--
                 }
                 this.loading.vote = false
             }
@@ -128,6 +132,13 @@
                 default:
                     break
             }
+            this.$axios.$get('/activity/check-vote/', {
+                params: {
+                    pk: this.activity.id
+                }
+            }).then(res => {
+                this.vote = res
+            })
         },
         computed: {
             actor() {

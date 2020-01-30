@@ -45,9 +45,9 @@
     }
 
     .bar {
-        z-index: 39;
+        z-index: 99;
         width: 0;
-        overflow: hidden;
+        margin-left: -45px;
         padding: 0;
 
         .button.fixed {
@@ -55,11 +55,13 @@
             position: fixed;
             left: 1rem;
             top: 0.45rem;
+            z-index: 9999;
         }
 
         .part-1 {
             position: fixed;
             left: 4rem;
+            z-index: 9999;
 
             .image {
                 width: 45px;
@@ -69,7 +71,7 @@
         &.is-active {
             width: 45px;
             padding: 0 0.5rem 0.5rem;
-
+            margin-left: 0;
             .button.fixed {
                 left: 3.5rem;
             }

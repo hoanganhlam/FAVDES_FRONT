@@ -36,8 +36,7 @@
     }
 
     &.layout-square {
-        --columns: 1;
-        --content-width: 270px;
+        display: unset;
     }
 
     &.layout-1 {
