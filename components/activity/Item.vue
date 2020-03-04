@@ -19,7 +19,7 @@
                             <b-icon size="is-small" icon="menu-right"></b-icon>
                         </small>
                         <small v-if="activity.address">
-                            <n-link :to="`/add/${activity.address.id}`">{{activity.address.formatted_address}}</n-link>
+                            <n-link :to="`/add/${activity.address.id}`">{{activity.address['formatted_address']}}</n-link>
                         </small>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <action-object :to="activity.slug" v-if="action_object" :value="action_object" :layout="layout"/>
+        <action-object :to="activity.slug" v-if="value['action_object']" :value="value['action_object']" :layout="layout"/>
         <div v-if="items.length && layout !== 'square' && activity.address" class="card-content" style="padding-top: 0">
             <div class="tags" style="margin-bottom: 0">
                 <n-link class="tag" v-for="d in activity.address.destinations" :to="`/${d.slug}`" :key="d.id">
@@ -121,12 +121,11 @@
             }
         },
         created() {
-            let kind = this.value && this["action_object"] ? this["action_object"]["model_name"] : ''
-            switch (kind) {
-                case 'Post':
+            switch (this.value['action_object_content_type']) {
+                case this.getType('post'):
                     Vue.component('action-object', Post)
                     break
-                case 'Destination':
+                case this.getType('destination'):
                     Vue.component('action-object', Destination)
                     break
                 default:
@@ -145,34 +144,25 @@
                 let media = null
                 let title = null
                 let slug = null
-                if (this.activity.temp.actor) {
-                    if (this.activity.temp.actor.model_name === 'User') {
-                        media = this.activity.temp.actor.profile ? this.activity.temp.actor.profile.media : null
-                        title = this.convertName(this.activity.temp.actor)
-                        slug = `/profile/${this.activity.temp.actor.username}`
-                    }
+                if (this.activity['actor_content_type'] === this.getType('user')) {
+                    media = this.activity.actor.profile ? this.activity.actor.profile.media : null
+                    title = this.convertName(this.activity.actor)
+                    slug = `/profile/${this.activity.actor.username}`
                 }
-
                 return {
                     media,
                     title,
                     slug
                 }
             },
-            target() {
-                return this.activity.temp.target
-            },
-            action_object() {
-                return this.activity.temp.action_object
-            },
             items() {
                 if (this.activity.address) {
-                    return this.activity.address.destinations
+                    return this.activity.address['destinations']
                 }
                 return []
             },
             primaryD() {
-                return this.activity.address && this.activity.address.destinations.length ? this.activity.address.destinations[0] : null
+                return this.activity.address && this.activity.address['destinations'].length ? this.activity.address['destinations'][0] : null
             }
         }
     }
