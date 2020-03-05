@@ -4,7 +4,12 @@
             <div class="container medium">
                 <b-navbar>
                     <template slot="start">
-                        <b-navbar-item>
+                        <b-navbar-item tag="div">
+                            <n-link to="/">
+                                <img src="/logo.png" alt="">
+                            </n-link>
+                        </b-navbar-item>
+                        <b-navbar-item tag="div">
                             <b-dropdown position="is-bottom-left" aria-role="menu" trap-focus>
                                 <b-field slot="trigger">
                                     <b-input placeholder="Search..." type="search" expanded
@@ -46,33 +51,6 @@
         <main class="main-content">
             <nuxt/>
         </main>
-        <div class="bar" v-bind:class="{'is-active': showBar}">
-            <div class="part-1">
-                <div class="image">
-                    <n-link to="/"><img src="/logo.png" alt="9Destination"></n-link>
-                </div>
-            </div>
-            <div class="part-2">
-                <div class="elm">
-                    <n-link to="/" class="button is-text" v-bind:class="{'is-primary': isPrimary('destination')}">
-                        <b-icon icon="rss"></b-icon>
-                    </n-link>
-                </div>
-                <div class="elm">
-                    <n-link to="/rank" class="button is-text" v-bind:class="{'is-primary': isPrimary('rank')}">
-                        <b-icon icon="poll"></b-icon>
-                    </n-link>
-                </div>
-            </div>
-            <div class="part-3">
-                <div class="button is-text">
-                    <b-icon icon="settings-outline"></b-icon>
-                </div>
-            </div>
-            <div class="button fixed" @click="showBar = !showBar">
-                <b-icon :icon="showBar ? 'chevron-left' : 'chevron-right'"></b-icon>
-            </div>
-        </div>
         <footer class="footer">
             <div class="content has-text-centered">
                 <p><strong>Made</strong> with ❤️</p>

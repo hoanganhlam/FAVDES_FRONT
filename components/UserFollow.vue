@@ -1,11 +1,11 @@
 <template>
     <div class="card">
         <div class="card-content">
-            <div class="columns is-multiline is-mobile is-gapless" v-if="!currentUser">
-                <div class="column is-4" v-for="i in 9" :key="i">
-                    <figure class="image">
-                        <img :src="`https://i.pravatar.cc/300?img=${i}`" alt="">
-                    </figure>
+            <div class="columns is-multiline is-mobile" v-if="!currentUser">
+                <div class="column is-4" v-for="(u, i) in response.results" :key="i">
+                    <n-link :to="`/profile/${u.username}`">
+                        <avatar class="is-1by1" :value="u.profile.media" :name="convertName(u)"/>
+                    </n-link>
                 </div>
                 <div class="column is-12">
                     <div class="button is-fullwidth is-danger">Join with us!</div>
@@ -38,7 +38,8 @@
         },
         methods: {
             async fetch() {
-                this.response = await this.$api.user.list({page_size: 5})
+                let size = this.currentUser ? 5 : 9
+                this.response = await this.$api.user.list({page_size: size})
             }
         },
         async created() {

@@ -3,7 +3,7 @@
         <div class="card-content" style="padding-bottom: 0;" v-if="layout !== 'square'">
             <div class="media">
                 <div class="media-left">
-                    <Avatar class="is-32x32" :value="actor.media"></Avatar>
+                    <Avatar class="is-32x32" :value="actor.media" :name="actor.title"/>
                 </div>
                 <div class="media-content" style="line-height: 1.2;">
                     <div>
@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <action-object :to="activity.slug" v-if="value['action_object']" :value="value['action_object']" :layout="layout"/>
+        <action-object :to="activity.slug" v-if="value['action_object']" :value="value['action_object']"/>
         <div v-if="items.length && layout !== 'square' && activity.address" class="card-content" style="padding-top: 0">
             <div class="tags" style="margin-bottom: 0">
                 <n-link class="tag" v-for="d in activity.address.destinations" :to="`/${d.slug}`" :key="d.id">

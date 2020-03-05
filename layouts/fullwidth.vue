@@ -4,7 +4,12 @@
             <div class="container medium">
                 <b-navbar>
                     <template slot="start">
-                        <b-navbar-item>
+                        <b-navbar-item tag="div">
+                            <n-link to="/">
+                                <img src="/logo.png" alt="">
+                            </n-link>
+                        </b-navbar-item>
+                        <b-navbar-item tag="div">
                             <b-dropdown position="is-bottom-left" aria-role="menu" trap-focus>
                                 <b-field slot="trigger">
                                     <b-input v-if="openSearch" placeholder="Search..." type="search" expanded v-model="search"></b-input>

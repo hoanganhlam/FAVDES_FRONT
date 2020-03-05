@@ -35,7 +35,7 @@
         methods: {},
         computed: {
             title() {
-                let temp = this.activity.temp
+                let temp = this.activity
                 return temp && temp["action_object"] && temp["action_object"].title ? temp["action_object"].title : temp["action_object"].content
             }
         },

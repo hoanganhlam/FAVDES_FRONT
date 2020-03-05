@@ -8,7 +8,7 @@
             <div class="comment" v-for="c in response.results" :key="c.id">
                 <div class="media">
                     <div class="media-left">
-                        <avatar :class="avatarSize" v-model="c.user.profile.media"></avatar>
+                        <avatar :class="avatarSize" v-model="c.user.profile.media" :name="convertName(c.user)"/>
                     </div>
                     <div class="media-content">
                         <div class="author">
@@ -35,8 +35,7 @@
             </b-field>
             <div class="level is-mobile">
                 <div class="level-left">
-                    <user-card v-if="currentUser" :value="currentUser"></user-card>
-                    <span class="button is-static" v-else>Please login!</span>
+                    <user-card v-if="currentUser" :value="currentUser" :name="currentUser ? convertName(currentUser) : 'Guest'"/>
                 </div>
                 <div class="level-right">
                     <div class="buttons">
