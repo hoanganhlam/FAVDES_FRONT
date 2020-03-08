@@ -19,7 +19,8 @@
                             <b-icon size="is-small" icon="menu-right"></b-icon>
                         </small>
                         <small v-if="activity.address">
-                            <n-link :to="`/add/${activity.address.id}`">{{activity.address['formatted_address']}}</n-link>
+                            <n-link :to="`/add/${activity.address.id}`">{{activity.address['formatted_address']}}
+                            </n-link>
                         </small>
                     </div>
                 </div>
@@ -121,7 +122,7 @@
             }
         },
         created() {
-            switch (this.value['action_object_content_type']) {
+            switch (this.value['action_object_content_type_id']) {
                 case this.getType('post'):
                     Vue.component('action-object', Post)
                     break
@@ -144,7 +145,7 @@
                 let media = null
                 let title = null
                 let slug = null
-                if (this.activity['actor_content_type'] === this.getType('user')) {
+                if (this.activity['actor_content_type_id'] === this.getType('user')) {
                     media = this.activity.actor.profile ? this.activity.actor.profile.media : null
                     title = this.convertName(this.activity.actor)
                     slug = `/profile/${this.activity.actor.username}`
@@ -157,12 +158,14 @@
             },
             items() {
                 if (this.activity.address) {
-                    return this.activity.address['destinations']
+                    return this.activity.address['destinations'] ? this.activity.address['destinations'] : []
                 }
                 return []
             },
             primaryD() {
-                return this.activity.address && this.activity.address['destinations'].length ? this.activity.address['destinations'][0] : null
+                return this.activity.address
+                && this.activity.address['destinations']
+                && this.activity.address['destinations'].length ? this.activity.address['destinations'][0] : null
             }
         }
     }

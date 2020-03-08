@@ -35,7 +35,7 @@ const RestfulRepo = (app, item) => {
 
 const apis_module = [
     {
-        space: 'activity',
+        space: 'general',
         endpoint: 'config',
         name: 'config',
         methods: {}
@@ -113,7 +113,7 @@ const apis_module = [
         methods: {}
     },
     {
-        space: 'activity',
+        space: 'general',
         endpoint: 'taxonomies',
         name: 'taxonomy',
         methods: {}

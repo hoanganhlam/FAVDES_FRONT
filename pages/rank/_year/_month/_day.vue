@@ -11,10 +11,6 @@
                                     <b-icon icon="map-marker-circle"></b-icon>
                                     <span>Destination</span>
                                 </n-link>
-                                <n-link class="button" :to="`/rank?m=user`" v-bind:class="{'is-primary': $route.query.m === 'user'}">
-                                    <b-icon icon="seal"></b-icon>
-                                    <span>Member</span>
-                                </n-link>
                             </div>
                         </div>
                     </div>

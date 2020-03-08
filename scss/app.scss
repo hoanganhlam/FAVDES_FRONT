@@ -18,19 +18,22 @@ $dropdown-item-active-color: brown;
 $navbar-height: 2.75rem;
 $dropdown-content-padding-bottom: 0;
 $dropdown-content-padding-top: 0;
-$modal-background-background-color: #FFF;
-$small-font-size: 12px;
+$modal-background-background-color: rgba(0, 0, 0, 0.4);
 $border-color: #EEE;
-$body-font-size: 14px;
-$size-normal: 14px;
 $card-shadow: 0px 0px 1px 1px #EEE;
 $card-media-margin: 0.5rem;
 $progress-border-radius: 2px;
 $navbar-item-img-max-height: 2em;
 $section-padding: 1em 0;
 $tabs-link-active-color: #FFF;
+$body-family: SegoeUI, Tahoma, Arial, sans-serif;
 
+@import "./front_segoe.css";
 @import "~bulma/bulma";
+@import "functions";
+@import "mixins";
+@import "grid";
+@import "./mapbox-gl.css";
 
 .container {
     padding: 0 1rem;
@@ -40,7 +43,12 @@ $tabs-link-active-color: #FFF;
     }
 
     &.large {
-        max-width: 960px;
+        max-width: 1080px;
+    }
+
+    &.extra {
+        max-width: 100%;
+        padding: 0;
     }
 }
 
@@ -225,18 +233,13 @@ img {
 }
 
 .main-content {
-    min-height: calc(100vh - 49px);
-    margin-top: 49px;
+    min-height: calc(100vh - 53px);
 }
 
 .header {
     border-bottom: 1px solid #efefef;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-    background: #FFFFFF;
+    z-index: 31;
+    position: relative;
 }
 
 img.is-round {
@@ -396,6 +399,87 @@ li.is-active a {
     }
 }
 
-@import "grid";
-@import "./mapbox-gl.css";
+.navbar-item {
+    font-weight: 500;
+}
+
+:focus {
+    outline: unset;
+}
+
+.dropdown-item {
+    padding: .75rem;
+}
+
+.datepicker .dropdown-content {
+    border-radius: 0;
+}
+
+.datepicker .datepicker-table .datepicker-cell {
+    padding: 0.5rem 0.5rem;
+    border-radius: 0;
+}
+
+.dropdown:not(.is-top-right) .dropdown-menu {
+    top: calc(100% + 10px);
+
+    &:before {
+        @include triangle(top, #1515150f, 0.75rem);
+        position: absolute;
+        top: -7px;
+        left: 8px;
+    }
+
+    &:after {
+        @include triangle(top, #FFF, 0.6rem);
+        position: absolute;
+        top: -5px;
+        left: 10px;
+        z-index: 4;
+    }
+}
+
+.dropdown.is-top-right .dropdown-menu {
+    bottom: calc(100% + 10px) !important;
+
+    &:before {
+        @include triangle(bottom, #1515150f, 0.75rem);
+        position: absolute !important;
+        bottom: -12px !important;
+        left: 8px !important;
+    }
+
+    &:after {
+        @include triangle(bottom, #FFF, 0.6rem);
+        position: absolute !important;
+        bottom: -10px !important;
+        left: 10px !important;
+        z-index: 4;
+    }
+}
+
+.dropdown-content,
+.datepicker .dropdown-content {
+    z-index: 3;
+    position: relative;
+    box-shadow: rgba(15, 15, 15, 0.05) 0 0 0 1px, rgba(15, 15, 15, 0.1) 0 3px 6px, rgba(15, 15, 15, 0.2) 0 9px 24px;
+}
+
+.modal-card-head, .modal-card-foot {
+    background-color: #ffffff;
+    border: 0;
+}
+
+.modal.allow-scroll {
+    overflow: unset;
+
+    .modal-card-body {
+        overflow: unset;
+    }
+
+    .modal-content {
+        overflow: unset;
+    }
+}
+
 @import "mobile";

@@ -6,13 +6,10 @@
             </client-only>
         </div>
         <div class="has-stream column" v-bind:class="{'hidden_x': hidden}">
-            <div class="close" @click="hidden = !hidden">
-                <b-icon icon="close"></b-icon>
-            </div>
             <div class="wrap" v-if="!hidden">
                 <div class="head">
                     <div class="container small">
-                        <div class="level">
+                        <div class="level is-mobile">
                             <div class="level-left">
                                 <h1 class="title is-4">{{address['formatted_address']}}</h1>
                             </div>
@@ -27,8 +24,12 @@
                     </div>
                 </div>
                 <div class="body">
-                    <div class="container small">
-                        <activity v-for="a in activityRes.results" :key="a.id" :value="a"></activity>
+                    <div class="container">
+                        <div class="columns grid">
+                            <div class="column is-6 grid-item" v-for="a in activityRes.results" :key="a.id">
+                                <activity :value="a"></activity>
+                            </div>
+                        </div>
                         <b-pagination
                             :total="activityRes.count"
                             :current.sync="queries.page"
@@ -99,6 +100,9 @@
         },
         mounted() {
             this.toTop()
+            this.$nextTick(() => {
+                this.reLayout()
+            })
         }
     }
 </script>
@@ -118,8 +122,11 @@
 
             .head {
                 box-shadow: 0 0 1px 1px #EEE;
-                padding: .5rem 0;
-                margin-bottom: 2rem;
+                padding: 0.5rem 0;
+            }
+
+            .body {
+                padding: 1.5rem 0;
             }
 
             .wrap {
@@ -127,37 +134,9 @@
                 overflow: auto;
                 width: 100%;
                 height: 100%;
-            }
 
-            .close {
-                position: absolute;
-                left: -62px;
-                padding: 0.5rem;
-                top: 0;
-                border-bottom: 10px solid transparent;
-                border-left: 10px solid transparent;
-                border-right: 36px solid #EEEEEE;
-                border-top: 10px solid transparent;
-                height: 49px;
-                cursor: pointer;
-
-                .icon {
-                    position: absolute;
-                    right: -30px;
-                    top: 0;
-                }
-
-                &:before {
-                    content: "";
-                    position: absolute;
-                    left: -8px;
-                    padding: 0.5rem;
-                    top: -10px;
-                    border-bottom: 10px solid transparent;
-                    border-left: 9px solid transparent;
-                    border-right: 35px solid white;
-                    border-top: 10px solid transparent;
-                    height: 48px;
+                &::-webkit-scrollbar {
+                    display: none;
                 }
             }
         }

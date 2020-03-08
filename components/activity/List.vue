@@ -3,6 +3,7 @@
         <create-post style="margin-bottom: 1.5rem" @done="fetch(1)"></create-post>
         <activity v-for="a in data.results" :key="a.id" :value="a" layout="minimize"></activity>
         <b-pagination
+            rounded
             :total="data.count"
             :current.sync="queries.page"
             :per-page="10">

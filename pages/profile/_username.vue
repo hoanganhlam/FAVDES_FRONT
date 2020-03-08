@@ -57,12 +57,13 @@
         <div class="hero is-small">
             <div class="hero-body">
                 <div class="container large">
-                    <div class="columns is-multiline is-mobile">
-                        <div class="column is-6" v-for="(a, i) in activityRes.results" :key="i">
+                    <div class="columns is-multiline is-mobile grid">
+                        <div class="column is-6 grid-item" v-for="(a, i) in activityRes.results" :key="i">
                             <activity layout="square" :value="a"></activity>
                         </div>
                     </div>
                     <b-pagination
+                        rounded
                         :total="activityRes.count"
                         :current.sync="queries.page"
                         :per-page="queries.page_size">
@@ -169,6 +170,14 @@
         },
         mounted() {
             this.toTop()
+            this.$nextTick(() => {
+                this.reLayout()
+            })
+        },
+        updated() {
+            if (process.client) {
+                this.reLayout()
+            }
         }
     }
 </script>

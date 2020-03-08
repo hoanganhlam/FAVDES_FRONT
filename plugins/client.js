@@ -34,6 +34,15 @@ Vue.mixin({
                 }
             )
             return out
+        },
+        reLayout() {
+            let elem = document.querySelector('.grid');
+            if (elem) {
+                new Masonry(elem, {
+                    // options
+                    itemSelector: '.grid-item'
+                });
+            }
         }
     }
 })

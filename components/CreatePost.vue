@@ -10,7 +10,8 @@
             </div>
             <div class="column" v-bind:class="{'is-12': posting}">
                 <b-field label-position="on-border" label="in" expanded>
-                    <single-select
+                    <data-select
+                        :multiple="false"
                         @focus="mapping = true"
                         field="formatted_address"
                         v-model="form.address" size="is-medium" icon="map-marker-plus"
@@ -51,7 +52,7 @@
             <b-input icon="text" v-model="form.title" placeholder="Title for this"></b-input>
         </b-field>
         <b-field v-if="posting">
-            <multiple-select v-model="form.taxonomies" placeholder="#hashtag" module="taxonomy"/>
+            <data-select multiple v-model="form.taxonomies" placeholder="#hashtag" module="taxonomy"/>
         </b-field>
         <div v-if="posting" class="buttons">
             <div class="button is-medium" style="width: calc(20% - 0.5rem)" @click="posting = false">

@@ -3,7 +3,7 @@
         <div :class="boxClass" style="padding-bottom: 0">
             <div v-if="value.medias.length" :class="galleryClass">
                 <div v-for="(img, i) in photos" :class="`clickable gallery__item gallery__item--${i + 1}`" @click="handleClick(i)">
-                    <img class="gallery__img" :src="src(i)" :alt="img.title">
+                    <img class="gallery__img" :src="src(i)" :alt="img.title" @load="onLoad">
                 </div>
             </div>
             <div v-else-if="layout === 'square'">
@@ -13,12 +13,8 @@
             </div>
         </div>
         <div class="card-content content" v-bind:class="{'inside hover': layout === 'square'}">
-            <h3 style="margin-bottom: 10px" class="title is-6" v-if="value.title">
-                <n-link :to="to">{{value.title}}</n-link>
-            </h3>
-            <p v-if="value.content">
-                <n-link :to="to">{{value.content}}</n-link>
-            </p>
+            <h3 style="margin-bottom: 10px" class="title is-6" v-if="value.title">{{value.title}}</h3>
+            <p v-if="value.content">{{value.content}}</p>
         </div>
     </div>
 </template>
@@ -54,6 +50,9 @@
                     index: i,
                     user: this.value.user
                 })
+            },
+            onLoad(e) {
+                this.reLayout()
             }
         },
         computed: {

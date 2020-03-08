@@ -1,7 +1,7 @@
 <template>
     <div class="image avatar" v-bind:class="{'initials': name && !data }">
         <Upload v-if="isUpdating" class="upload" @done="handleUpload"></Upload>
-        <img class="is-round" v-else-if="data" :src="cleanURI(data.sizes['270_270'])" alt="">
+        <img class="is-round" v-else-if="data" :src="cleanURI(data.sizes['thumb_270_270'])" alt="">
         <span v-else-if="name">{{avatarName(name)}}</span>
         <img class="is-round" v-else src="/avatar.png" alt="">
     </div>

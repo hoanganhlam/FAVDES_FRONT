@@ -27,8 +27,14 @@
                                 </b-dropdown-item>
                             </b-dropdown>
                         </b-navbar-item>
+                        <b-navbar-item tag="div">
+                            <n-link to="/rank"><b-icon icon="chart-line-variant" size="is-small"></b-icon><span>Rank</span></n-link>
+                        </b-navbar-item>
                     </template>
                     <template slot="end">
+                        <b-navbar-item tag="div">
+                            <n-link class="button" to="/planner">Planner</n-link>
+                        </b-navbar-item>
                         <b-navbar-item tag="div">
                             <div class="buttons" v-if="!Boolean(currentUser)">
                                 <button class="button is-primary" @click="handleClick(false)">

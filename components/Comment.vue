@@ -12,7 +12,7 @@
                     </div>
                     <div class="media-content">
                         <div class="author">
-                            <n-link :to="`/member/${c.user.username}`">{{convertName(c.user)}}</n-link>
+                            <n-link :to="`/profile/${c.user.username}`">{{convertName(c.user)}}</n-link>
                         </div>
                         <div class="value content">
                             {{c.content}}
@@ -35,7 +35,8 @@
             </b-field>
             <div class="level is-mobile">
                 <div class="level-left">
-                    <user-card v-if="currentUser" :value="currentUser" :name="currentUser ? convertName(currentUser) : 'Guest'"/>
+                    <user-card v-if="currentUser" :value="currentUser"
+                               :name="currentUser ? convertName(currentUser) : 'Guest'"/>
                 </div>
                 <div class="level-right">
                     <div class="buttons">
@@ -115,6 +116,10 @@
 
         .comment {
             margin-bottom: 0.5rem;
+
+            .value.content {
+                margin-bottom: 0;
+            }
         }
     }
 </style>
