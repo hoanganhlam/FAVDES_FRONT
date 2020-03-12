@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import MapBox from "../components/map/MapBox";
-import Google from "../components/Map/Google";
+import Google from "../components/map/Google";
 // import Map from '../components/Map'
 //
 // Vue.component('GMap', Map)
