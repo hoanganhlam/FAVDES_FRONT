@@ -1,24 +1,38 @@
 import Vue from 'vue'
-import Login from '../components/Login'
-import User from '../components/User'
-import UserFollow from '../components/UserFollow'
-import CreatePost from "./CreatePost";
-import DataSelect from "./field/Data";
-import MediaSlider from "./MediaSlider";
-import Map from "./Map"
-import Editable from "./field/Editable";
-import Upload from "./Upload";
+import Login from './form/Login'
+import User from './card/User'
+import UserFollow from './utils/UserFollow'
+import CreatePost from "./form/CreatePost";
+import MediaSlider from "./media/MediaSlider";
+import Map from "./map/Map"
+import Upload from "./form/Upload";
 import Activity from "./activity/Item";
-import Avatar from "./Avatar";
-import Follow from "./Follow";
-import MediaViewer from "./MediaViewer";
-import Comment from "./Comment";
+import Avatar from "./card/Avatar";
+import Follow from "./utils/Follow";
+import MediaViewer from "./media/MediaViewer";
+import Comment from "./form/Comment";
 import ActivityList from "./activity/List";
 import ActivityDetail from "./activity/Detail";
-import Thumbnail from "./Thumbnail";
+import Thumbnail from "./card/Thumbnail";
 import Step from "./modal/Step";
 import TripSetting from "./modal/TripSetting";
+import ContentEditable from "./field/ContentEditable";
+import CardStep from "./card/Step"
 
+//Field
+import DataSelect from "./field/Data";
+import Editable from "./field/Editable";
+import MapSelect from "./field/MapSelect";
+import Field from "./field"
+import Json from "./field/Json";
+import MediaField from "./field/Media";
+
+Vue.component('field-media', MediaField)
+Vue.component('field-json', Json)
+Vue.component('field', Field)
+Vue.component('map-select', MapSelect)
+Vue.component('card-step', CardStep)
+Vue.component('ce', ContentEditable)
 Vue.component('step', Step)
 Vue.component('trip-setting', TripSetting)
 Vue.component('thumbnail', Thumbnail)

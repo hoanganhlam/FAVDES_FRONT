@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="loading-page hero is-fullheight" v-if="loading">
         <div class="hero-body has-text-centered">
-            <img src="../static/sunny-light.svg" alt="">
+            <img src="../../static/sunny-light.svg" alt="">
         </div>
     </div>
 </template>

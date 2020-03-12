@@ -128,7 +128,7 @@
                 if (this.showComment) {
                     return this.media.sizes['540_540']
                 }
-                return this.media.path
+                return this.media.sizes['resize']
             }
         },
         watch: {

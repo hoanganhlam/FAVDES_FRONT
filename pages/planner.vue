@@ -8,15 +8,7 @@
     export default {
         name: "planner",
         data() {
-            return {
-                options: {
-                    sections: []
-                },
-                dates: [],
-                active: null,
-                showSetting: false,
-                showStep: false
-            }
+            return {}
         }
     }
 </script>
@@ -36,10 +28,6 @@
 
         .content {
             padding: 1.5rem 1rem 1rem;
-
-            .widget_title {
-                font-size: 1rem;
-            }
         }
 
         .title[contenteditable=true] {
@@ -50,6 +38,8 @@
         }
 
         .schedule {
+            margin-top: 2rem;
+
             .level {
             }
 
@@ -66,28 +56,36 @@
         .has-banner {
             position: relative;
 
-            .button.is-text {
+            .banner-control {
+                opacity: 0;
                 position: absolute;
-                bottom: 0;
-                left: 0;
+                bottom: 1rem;
+                left: 1rem;
                 border-radius: 0;
                 margin-left: unset;
+            }
+
+            &:hover {
+                .banner-control {
+                    opacity: 1;
+                    transition: opacity 0.5s, visibility 0.5s;
+                }
             }
         }
     }
 
     .subheader {
-        .navbar {
-            background-color: unset;
+        padding: .5rem 0;
+
+        .button,
+        .switch {
+            margin-right: 1rem;
+            font-size: 14px;
         }
     }
 
     [contenteditable][placeholder]:empty:before {
         content: attr(placeholder);
         color: #DDDDDD;
-    }
-
-    .value {
-
     }
 </style>

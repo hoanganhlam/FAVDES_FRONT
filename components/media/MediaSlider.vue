@@ -37,7 +37,7 @@
 </template>
 
 <script>
-    import Upload from "./Upload";
+    import Upload from "../form/Upload";
 
     export default {
         name: "Browser",

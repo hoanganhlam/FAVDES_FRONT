@@ -3,82 +3,60 @@
         <div class="planner">
             <div class="subheader">
                 <div class="container">
-                    <b-navbar>
-                        <template slot="start">
-                            <b-navbar-item tag="div">
-                                TRIP PLANNER
-                            </b-navbar-item>
-                        </template>
-                        <template slot="end">
-                            <b-navbar-item tag="div">
-                                <b-switch v-model="publicView">Public</b-switch>
-                            </b-navbar-item>
-                            <b-navbar-item tag="div" v-if="!publicView">
-                                <button class="button is-text" type="button" @click="showSetting = !showSetting">
+                    <div class="level is-mobile">
+                        <div class="level-left">
+                            <h1>{{data.id ? data.title : 'TRIP PLANNER'}}</h1>
+                        </div>
+                        <div class="level-right">
+                            <n-link v-if="data.id" :to="`/planner/${data.id}`" class="button is-text">
+                                {{saving ? 'Saving' : 'Saved'}}
+                            </n-link>
+                            <b-switch v-model="publicView">Public</b-switch>
+                            <div class="buttons">
+                                <button v-if="!publicView" class="button is-text" type="button"
+                                        @click="showSetting = !showSetting">
                                     <b-icon size="is-small" :icon="active ? 'cogs' : 'cogs'"></b-icon>
                                     <span>Setting</span>
                                 </button>
-                            </b-navbar-item>
-                            <b-navbar-item tag="div" v-if="publicView">
-                                <div class="button is-text">
+                                <div class="button is-text" v-if="publicView">
                                     <b-icon icon="message" size="is-small"></b-icon>
                                     <span>Chat</span>
                                 </div>
-                            </b-navbar-item>
-                            <b-navbar-item tag="div"  v-if="publicView">
-                                <div class="button is-text">
+                                <div class="button is-text" v-if="publicView">
                                     <b-icon icon="account-plus" size="is-small"></b-icon>
                                     <span>JOIN</span>
                                 </div>
-                            </b-navbar-item>
-                            <b-navbar-item tag="div" v-if="!publicView">
-                                <div class="button is-text">
+                                <div class="button is-text" v-if="!publicView">
                                     <b-icon size="is-small" icon="send"></b-icon>
                                     <span>Share</span>
                                 </div>
-                            </b-navbar-item>
-                        </template>
-                    </b-navbar>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="container" v-bind:class="{'extra has-banner': hasBanner}">
-                <div class="banner image" v-if="hasBanner">
-                    <img src="https://i.picsum.photos/id/337/920/200.jpg" alt="">
-                </div>
-                <div class="button is-text" @click="hasBanner = !hasBanner">
-                    <b-icon size="is-small" icon="plus"></b-icon>
-                    <span>Add cover</span>
+            <div class="container" v-bind:class="{'extra has-banner': data.options.banner}">
+                <transition name="fade">
+                    <field-media style="max-height: 200px" :multiple="false" v-if="data.options.banner"
+                                 v-model="data.media"/>
+                </transition>
+                <div class="banner-control">
+                    <div class="button" v-bind:class="{'is-text' : !data.options.banner}"
+                         @click="data.options.banner = !data.options.banner">
+                        <b-icon size="is-small" icon="plus"></b-icon>
+                        <span>{{data.options.banner ? 'Remove' : 'Add'}} cover</span>
+                    </div>
                 </div>
             </div>
             <div class="container content">
-                <h1 class="title is-2" placeholder="Untitled" contenteditable>ssss</h1>
-                <p><b-dropdown aria-role="menu" trap-focus>
-                    <div class="button is-text" slot="trigger">
-                        <b>{{data.destination_start ? data.destination_start.title : 'Start'}}</b>
-                        <b-icon size="is-small" icon="arrow-right"></b-icon>
-                        <b>{{data.destination_end ? data.destination_end.title : 'End'}}</b>
-                    </div>
-                    <b-dropdown-item style="min-width: 300px" aria-role="menu-item" :focusable="false" custom>
-                        <b-field>
-                            <data-select
-                                :multiple="false"
-                                field="title"
-                                v-model="data.destination_start" size="is-medium" icon="map-marker-plus"
-                                placeholder="Start"
-                                module="destination"/>
-                        </b-field>
-                        <b-field>
-                            <data-select
-                                :multiple="false"
-                                field="title"
-                                v-model="data.destination_end" size="is-medium" icon="map-marker-plus"
-                                placeholder="End"
-                                module="destination"/>
-                        </b-field>
-                    </b-dropdown-item>
-                </b-dropdown></p>
-                <div class="description" contenteditable placeholder="Description">
-                </div>
+                <ce elm="h1" :editable="true" placeholder="Untitled" class="title is-2" v-model="data.title"></ce>
+                <places-picker
+                    :start="data.destination_start"
+                    :end="data.destination_end"
+                    @start="data.destination_start = $event"
+                    @end="data.destination_end = $event"
+                />
+                <ce elm="p" :editable="true" placeholder="Description" class="description" v-model="data.note"></ce>
                 <div class="schedule">
                     <div class="level is-mobile">
                         <div class="level-left">
@@ -101,29 +79,12 @@
                     </div>
                     <div>
                         <div class="columns is-multiline">
-                            <div class="column is-6" v-for="(s, i) in data.steps" :key="i">
-                                <div class="card step clickable" @click="showSF(s)">
-                                    <div class="card-content">
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <div class="image is-32x32">
-                                                    <img src="https://img.icons8.com/ios/250/000000/bicycle.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="media-content">
-                                                <h4 class="value">Do Something</h4>
-                                                <p>abc xyz</p>
-                                            </div>
-                                            <div class="media-right">
-                                                10/3/2020 - 6:00 AM
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="column is-12" v-for="(s, i) in tasks" :key="`step_${i}`">
+                                <card-step :value="s" @click.native="showSF(s, i)"></card-step>
                             </div>
                         </div>
                         <div class="has-text-centered" v-if="!publicView">
-                            <div class="button is-text is-rounded" @click="showSF()">
+                            <div class="button is-text is-rounded" @click="showSF(null, -1)">
                                 <b-icon icon="plus"></b-icon>
                             </div>
                         </div>
@@ -132,51 +93,134 @@
             </div>
             <div class="container">
                 <client-only>
-                    <MapBox height="200px" :addresses="[]"></MapBox>
+                    <MapBox height="200px" :addresses="addresses"></MapBox>
                 </client-only>
             </div>
-<!--            <div class="container content">-->
-<!--                <h4 class="widget_title">-->
-<!--                    <b-icon icon="camera" size="is-small"></b-icon>-->
-<!--                    <span>Gear</span>-->
-<!--                </h4>-->
-<!--            </div>-->
         </div>
         <b-modal :active.sync="showSetting" :width="320">
             <div class="box"></div>
         </b-modal>
         <b-modal :active.sync="showStep" :can-cancel="false" custom-class="allow-scroll" animation="zoom-in">
-            <step style="min-height: 80vh"></step>
+            <step :schedule="data" v-model="activeStep" style="min-height: 80vh" @save="onAddStep"
+                  @delete="onDeleteStep"></step>
         </b-modal>
     </div>
 </template>
 
 <script>
+    import SelectPlaces from "../../components/form/SelectPlaces";
+    import debounce from 'lodash/debounce'
+
     export default {
         name: "TripDetail",
+        head() {
+            return {
+                title: this.data.id ? this.data.title : "Trip Plan"
+            }
+        },
+        components: {
+            'places-picker': SelectPlaces
+        },
+        async asyncData({$api, params}) {
+            let data = {
+                destination_start: null,
+                destination_end: null,
+                title: null,
+                note: null,
+                tasks: [],
+                options: {
+                    banner: false
+                }
+            }
+            if (params.id && params.id !== 'create') {
+                data = await $api.schedule.get(params.id)
+                if (!Boolean(data.options)) {
+                    data.options = {
+                        banner: false
+                    }
+                }
+            }
+            return {
+                data,
+                tasks: data.tasks
+            }
+        },
         data() {
             return {
                 options: {
                     sections: []
                 },
-                hasBanner: false,
                 dates: [],
                 active: null,
                 showSetting: false,
                 showStep: false,
-                data: {
-                    destination_start: null,
-                    destination_end: null,
-                    title: null,
-                    description: null,
-                    steps: []
-                },
-                publicView: false
+                publicView: false,
+                activeStep: null,
+                saving: false
             }
         },
         methods: {
-            showSF(step) {
+            showSF(task, index) {
                 this.showStep = true
+                if (task) task.index = index
+                this.activeStep = task
+            },
+            onAddStep(task) {
+                if (typeof task.index === 'undefined') {
+                    this.data.tasks.push({...task})
+                }
+                this.showStep = false
+            },
+            onDeleteStep(task) {
+                if (typeof task.index === 'undefined') {
+                    this.tasks.splice(-1, 1)
+                } else {
+                    this.tasks.splice(task.index, 1)
+                }
+            },
+            handleSave: debounce(async function () {
+                const data = {...this.cleanData(this.data)}
+                let res = null
+                this.saving = true
+                if (this.data.id) {
+                    res = await this.$api.schedule.update(this.data.id, this.cleanData(data))
+                } else {
+                    res = await this.$api.schedule.post(data)
+                }
+                if (res) {
+                    if (typeof this.data.id === 'undefined') {
+                        const filtered = this.tasks.filter(x => typeof x.id === 'undefined')
+                        for (let i = 0; i < filtered.length; i++) {
+                            await this.$api.task.post({
+                                schedule: res.id,
+                                ...this.cleanData(filtered[i])
+                            })
+                        }
+                    }
+                    this.data.id = res.id
+                    this.saving = false
+                }
+            }, 800)
+        },
+        computed: {
+            addresses() {
+                return this.tasks.filter(x => Boolean(x.destination)).map(x => x.destination.address)
+            }
+        },
+        watch: {
+            data: {
+                handler() {
+                    this.handleSave()
+                },
+                deep: true
+            }
+        },
+        created() {
+            if (process.client) {
+                this.tasks.forEach(x => {
+                    x.start_time = this.convertDate(x.start_time)
+                    x.end_time = this.convertDate(x.end_time)
+                })
             }
         }
     }

@@ -27,6 +27,9 @@ $navbar-item-img-max-height: 2em;
 $section-padding: 1em 0;
 $tabs-link-active-color: #FFF;
 $body-family: SegoeUI, Tahoma, Arial, sans-serif;
+$body-font-size: 14px;
+$size-normal: 14px;
+$size-small: 12px;
 
 @import "./front_segoe.css";
 @import "~bulma/bulma";
@@ -182,6 +185,10 @@ img {
         height: fit-content;
         border-color: #efefef;
         border-width: 2px;
+
+        .section {
+            padding: 2rem 0;
+        }
     }
 }
 
@@ -197,33 +204,6 @@ img {
 
 .vote.button {
     display: inline-table;
-}
-
-.image.empty {
-    background: #b9bf0f;
-    position: relative;
-
-    .wrap {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        span {
-            color: #FFFFFF;
-            font-size: 4rem;
-        }
-    }
-
-    &.small {
-        span {
-            font-size: 1rem;
-        }
-    }
 }
 
 .title {
@@ -409,6 +389,7 @@ li.is-active a {
 
 .dropdown-item {
     padding: .75rem;
+    border-bottom: 1px solid #EEEEEE;
 }
 
 .datepicker .dropdown-content {
@@ -420,6 +401,7 @@ li.is-active a {
     border-radius: 0;
 }
 
+.autocomplete .dropdown-menu,
 .dropdown:not(.is-top-right) .dropdown-menu {
     top: calc(100% + 10px);
 
@@ -471,7 +453,11 @@ li.is-active a {
 }
 
 .modal.allow-scroll {
-    overflow: unset;
+    overflow: auto;
+
+    .modal-background {
+        position: fixed;
+    }
 
     .modal-card-body {
         overflow: unset;
@@ -480,6 +466,31 @@ li.is-active a {
     .modal-content {
         overflow: unset;
     }
+}
+
+.is-fullheight {
+    height: 100%;
+}
+
+.pop_update_data {
+    background-color: #FFF;
+    padding: 1.5rem;
+}
+
+.image {
+    img {
+        object-fit: cover;
+    }
+}
+
+.notification {
+    margin-bottom: .5rem;
+    padding: 1rem .5rem;
+}
+
+.widget_title {
+    font-size: 1rem;
+    margin-bottom: .5rem;
 }
 
 @import "mobile";

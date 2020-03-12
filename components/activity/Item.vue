@@ -15,11 +15,11 @@
                         <small>
                             <n-link :to="`/posts/${activity.id}`">{{timeSince(activity.created)}}</n-link>
                         </small>
-                        <small>
+                        <small v-if="activity.destination">
                             <b-icon size="is-small" icon="menu-right"></b-icon>
                         </small>
-                        <small v-if="activity.address">
-                            <n-link :to="`/add/${activity.address.id}`">{{activity.address['formatted_address']}}
+                        <small v-if="activity.destination">
+                            <n-link :to="`/${activity.destination.slug}`">{{activity.destination['title']}}
                             </n-link>
                         </small>
                     </div>
@@ -78,7 +78,7 @@
 <script>
     import Vue from 'vue'
     import Post from "./Post";
-    import Destination from "../Destination";
+    import Destination from "../card/Destination";
 
     export default {
         name: "Activity",

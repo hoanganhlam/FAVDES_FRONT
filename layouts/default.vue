@@ -62,7 +62,7 @@
                 <p><strong>Made</strong> with ❤️</p>
             </div>
         </footer>
-        <b-modal :active.sync="isActive" has-modal-card full-screen :can-cancel="false">
+        <b-modal :active.sync="isActive" full-screen :can-cancel="false">
             <section class="hero is-fullheight">
                 <div class="hero-body">
                     <div class="container small" style="width: 400px; max-width: 400px">

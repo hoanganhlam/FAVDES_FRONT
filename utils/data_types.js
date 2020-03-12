@@ -1,0 +1,9 @@
+export const TEXT = 'text';
+export const JSON = 'json';
+export const DATA = 'data';
+export const ARRAY = 'array';
+export const DATETIME = 'datetime';
+export const BOOLEAN = 'boolean';
+export const SELECT = 'select'
+export const MEDIA = 'media'
+export const MAP = 'map'

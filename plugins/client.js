@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import * as VueGoogleMaps from 'vue2-google-maps'
-import MapBox from "../components/MapBox";
+import MapBox from "../components/map/MapBox";
+import Google from "../components/Map/Google";
 // import Map from '../components/Map'
 //
 // Vue.component('GMap', Map)
@@ -11,6 +12,7 @@ Vue.use(VueGoogleMaps, {
     },
     installComponents: true
 })
+Vue.component('google-map', Google)
 Vue.component('MapBox', MapBox)
 Vue.mixin({
     methods: {
@@ -20,21 +22,6 @@ Vue.mixin({
             document.body.scrollTop = 0;
             document.documentElement.scrollTop = 0;
         },
-        formatData(data) {
-            let out = {}
-            Object.keys(data).forEach(
-                field => {
-                    if (data[field] && typeof data[field] === 'object' && data[field].id) {
-                        out[field] = data[field].id
-                    } else if (Array.isArray(data[field]) && data[field].length && typeof data[field][0] === 'object' && data[field][0].id) {
-                        out[field] = data[field].map(x => x.id)
-                    } else {
-                        out[field] = data[field]
-                    }
-                }
-            )
-            return out
-        },
         reLayout() {
             let elem = document.querySelector('.grid');
             if (elem) {
@@ -42,6 +29,11 @@ Vue.mixin({
                     // options
                     itemSelector: '.grid-item'
                 });
+            }
+        },
+        getBrowserLocation(callback) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(callback);
             }
         }
     }

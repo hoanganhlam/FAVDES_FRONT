@@ -67,7 +67,7 @@
 </template>
 
 <script>
-    import Destination from "../../components/Destination";
+    import Destination from "../../components/card/Destination";
 
     export default {
         name: "AddressPage",

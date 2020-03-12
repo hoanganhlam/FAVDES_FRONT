@@ -10,6 +10,12 @@ Vue.mixin({
         },
         getType(field) {
             return this.$store.state.config.contentTypes[field]
+        },
+        getIMG(instance, size) {
+            if (size && instance.sizes && instance.sizes[size]) {
+                return instance.sizes[size]
+            }
+            return instance.path
         }
     }
 })

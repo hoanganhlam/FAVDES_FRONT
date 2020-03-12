@@ -9,39 +9,27 @@
                 </b-field>
             </div>
             <div class="column" v-bind:class="{'is-12': posting}">
-                <b-field label-position="on-border" label="in" expanded>
-                    <data-select
-                        :multiple="false"
-                        @focus="mapping = true"
-                        field="formatted_address"
-                        v-model="form.address" size="is-medium" icon="map-marker-plus"
-                        placeholder="Somewhere"
-                        module="fetch_address"/>
-                </b-field>
-                <b-field label-position="on-border" label="Name for your place" v-if="posting && form.address">
-                    <b-input v-model="form.destination_name"
-                             size="is-medium"
-                             icon="format-title"
-                             placeholder="My point"></b-input>
-                </b-field>
-                <b-field v-if="posting && mapping && addresses.length">
-                    <div class="tags">
-                        <div class="tag clickable is-small" v-for="add in addresses" :key="add.id"
-                             @click="form.address = add"
-                             v-bind:class="{'is-primary': form.address && add.id === form.address.id}">
-                            {{add.formatted_address}}
-                        </div>
+                <b-field label-position="on-border" label="in" expanded grouped>
+                    <div class="control is-expanded is-clearfix">
+                        <data-select
+                            require-modify
+                            v-model="form.destination"
+                            :multiple="false"
+                            :allow-new="true"
+                            field="title"
+                            value-field="slug"
+                            size="is-medium"
+                            icon="map-marker-plus"
+                            placeholder="Somewhere"
+                            module="destination"/>
                     </div>
-                </b-field>
-                <b-field v-if="posting && mapping">
-                    <MapBox height="150px" :addresses="form.address ? [form.address] : []" @moved="onMoved"></MapBox>
                 </b-field>
             </div>
         </div>
         <div class="columns is-mobile is-multiline">
             <div class="column is-3" v-for="p in form.medias" :key="p.id">
                 <div class="image">
-                    <img :src="p.sizes['270_270']" alt="">
+                    <img :src="p.sizes['thumb_270_270']" :alt="p.title">
                 </div>
             </div>
             <div class="column" v-bind:class="{'is-3': form.medias.length}">
@@ -74,18 +62,14 @@
                 form: {
                     title: null,
                     content: null,
-                    address: null,
+                    destination: null,
                     medias: [],
-                    taxonomies: [],
-                    destination_name: null
+                    taxonomies: []
                 },
                 isLoading: false,
-                posting: false,
-                mapping: false,
-                addresses: []
+                posting: false
             }
         },
-        computed: {},
         methods: {
             async submit() {
                 let data = this.formatData(this.form)
@@ -94,20 +78,14 @@
                 this.form = {
                     title: null,
                     content: null,
-                    address: null,
+                    destination: null,
                     medias: [],
-                    taxonomies: [],
-                    destination_name: null
+                    taxonomies: []
                 }
                 this.posting = false
-            },
-            onMoved(e) {
-                this.addresses = e.addresses
-                if (this.addresses.length) {
-                    this.form.address = this.addresses[0]
-                }
             }
-        }
+        },
+        computed: {}
     }
 </script>
 

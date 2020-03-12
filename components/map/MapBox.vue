@@ -8,7 +8,6 @@
 </template>
 
 <script>
-    import Mapbox from "mapbox-gl";
     import {MglMap, MglMarker} from "vue-mapbox";
 
     export default {
@@ -68,12 +67,25 @@
                 return [0, 0]
             },
             zoom() {
-                if (this.markers.length) {
-                    let sizes = this.markers[0].formatted_address.split(",")
-                    return sizes.length * 3
-                }
-                return 6
+                return 12
             }
+        },
+        mounted() {
+            this.getBrowserLocation((l) => {
+                const {latitude, longitude} = l.coords
+                if (this.markers.length === 0) {
+                    this.markers.push(
+                        {
+                            geometry: {
+                                location: {
+                                    lat: latitude,
+                                    lng: longitude
+                                }
+                            }
+                        }
+                    )
+                }
+            })
         }
     };
 </script>

@@ -153,6 +153,24 @@ const apis_module = [
         endpoint: 'fetch-address',
         name: 'fetch_address'
     },
+    {
+        space: 'trip',
+        endpoint: 'schedules',
+        name: 'schedule',
+        methods: {}
+    },
+    {
+        space: 'trip',
+        endpoint: 'tasks',
+        name: 'task',
+        methods: {}
+    },
+    {
+        space: 'trip',
+        endpoint: 'discussions',
+        name: 'discussion',
+        methods: {}
+    },
 ]
 
 

@@ -55,7 +55,9 @@ Vue.mixin({
             let out = {}
             Object.keys(data).forEach(i => {
                 if (data[i]) {
-                     if (Array.isArray(data[i])) {
+                    if (['start_time', 'end_time'].includes(i)) {
+                        out[i] = this.momentTime(data[i]).format('YYYY-MM-DD HH:mm')
+                    } else if (Array.isArray(data[i])) {
                         out[i] = data[i].map(x => x.id)
                     } else if (typeof data[i] === 'object' && data[i].id) {
                         out[i] = data[i].id
@@ -68,12 +70,12 @@ Vue.mixin({
         },
         convertDate(date) {
             if (date) {
-                return new Date(date)
+                return new Date(date + ' UTC')
             }
             return null
         },
         momentTime(date) {
-            return moment.utc(date, 'YYYY-MM-DDTHH:mm')
+            return moment(date, 'YYYY-MM-DDTHH:mm').utc()
         },
     },
     computed: {
