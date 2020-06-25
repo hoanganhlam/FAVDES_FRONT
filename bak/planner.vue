@@ -33,10 +33,6 @@
         .title[contenteditable=true] {
         }
 
-        .description {
-            margin-bottom: 1.5rem;
-        }
-
         .schedule {
             margin-top: 2rem;
 
@@ -76,6 +72,7 @@
 
     .subheader {
         padding: .5rem 0;
+        background: whitesmoke;
 
         .button,
         .switch {
