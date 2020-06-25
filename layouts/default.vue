@@ -1,40 +1,19 @@
 <template>
     <div>
         <header class="header">
-            <div class="container medium">
+            <div class="container">
                 <b-navbar>
+                    <template slot="brand">
+                        <b-navbar-item class="has-logo" tag="div">
+                            <n-link class="logo" to="/"><img src="/logo.png" alt="9Destination"></n-link>
+                        </b-navbar-item>
+                    </template>
                     <template slot="start">
                         <b-navbar-item tag="div">
-                            <n-link to="/">
-                                <img src="/logo.png" alt="">
-                            </n-link>
-                        </b-navbar-item>
-                        <b-navbar-item tag="div">
-                            <b-dropdown position="is-bottom-left" aria-role="menu" trap-focus>
-                                <b-field slot="trigger">
-                                    <b-input placeholder="Search..." type="search" expanded
-                                             v-model="search"></b-input>
-                                    <p class="control">
-                                        <b-button class="button is-success">
-                                            <b-icon icon="magnify" size="is-small"></b-icon>
-                                        </b-button>
-                                    </p>
-                                </b-field>
-                                <b-dropdown-item
-                                    aria-role="menu-item"
-                                    :focusable="false"
-                                    custom>
-                                </b-dropdown-item>
-                            </b-dropdown>
-                        </b-navbar-item>
-                        <b-navbar-item tag="div">
-                            <n-link to="/rank"><b-icon icon="chart-line-variant" size="is-small"></b-icon><span>Rank</span></n-link>
+                            <target-selector/>
                         </b-navbar-item>
                     </template>
                     <template slot="end">
-                        <b-navbar-item tag="div">
-                            <n-link class="button" to="/planner">Planner</n-link>
-                        </b-navbar-item>
                         <b-navbar-item tag="div">
                             <div class="buttons" v-if="!Boolean(currentUser)">
                                 <button class="button is-primary" @click="handleClick(false)">
@@ -44,11 +23,7 @@
                                     Log in
                                 </button>
                             </div>
-                            <div class="buttons" v-else>
-                                <button class="button is-text">
-                                    <user-card :value="currentUser"></user-card>
-                                </button>
-                            </div>
+                            <user-card v-else :value="currentUser"></user-card>
                         </b-navbar-item>
                     </template>
                 </b-navbar>
@@ -71,12 +46,14 @@
                 </div>
             </section>
         </b-modal>
-        <media-viewer></media-viewer>
     </div>
 </template>
 
 <script>
+    import TargetSelector from "../components/TargetSelector";
+
     export default {
+        components: {TargetSelector},
         data() {
             return {
                 isActive: false,
@@ -90,17 +67,11 @@
             handleClick(flag) {
                 this.isActive = true;
                 this.login = flag
-            },
-            isPrimary(flag) {
-                if (flag === 'destination') {
-                    return this.$route.params.destination || this.$route.params.flag || this.$route.params.activity || this.$route.path === '/'
-                }
-                return this.$route.path.includes(flag)
             }
         },
         watch: {
             $route() {
-                this.toTop()
+                this.toTop();
                 this.$store.dispatch('media/setData', {
                     medias: [],
                     index: 0,
@@ -112,5 +83,24 @@
 </script>
 
 <style lang="scss">
+    .header {
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #EEEEEE;
 
+        .navbar {
+            background-color: unset;
+        }
+    }
+
+    .has-logo {
+        padding: 0 .75rem;
+
+        img {
+            max-height: 1.5rem;
+        }
+    }
 </style>

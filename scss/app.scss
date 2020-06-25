@@ -24,25 +24,28 @@ $card-shadow: 0px 0px 1px 1px #EEE;
 $card-media-margin: 0.5rem;
 $progress-border-radius: 2px;
 $navbar-item-img-max-height: 2em;
-$section-padding: 1em 0;
 $tabs-link-active-color: #FFF;
-$body-family: SegoeUI, Tahoma, Arial, sans-serif;
+$body-weight: 500;
+$body-color: rgb(55, 53, 47);
 $body-font-size: 14px;
-$size-normal: 14px;
-$size-small: 12px;
+$body-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
 
-@import "./front_segoe.css";
 @import "~bulma/bulma";
 @import "functions";
 @import "mixins";
 @import "grid";
 @import "./mapbox-gl.css";
 
+body {
+    font-smooth: auto;
+    -webkit-font-smoothing: auto;
+}
+
 .container {
     padding: 0 1rem;
 
     &.small {
-        max-width: 600px;
+        max-width: 700px;
     }
 
     &.large {
@@ -158,7 +161,17 @@ $size-small: 12px;
 
 .card.post {
     p {
-        font-size: 13px;
+        font-size: 14px;
+        color: #333333;
+    }
+}
+
+.layout-square.card.post .card-content.content {
+    p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
         color: #9e9e9e;
     }
 }
@@ -217,7 +230,6 @@ img {
 }
 
 .header {
-    border-bottom: 1px solid #efefef;
     z-index: 31;
     position: relative;
 }
@@ -278,81 +290,6 @@ img.is-round {
 
 .clickable {
     cursor: pointer;
-}
-
-.skeleton:empty {
-    margin: 1rem auto;
-    width: 100%;
-    height: 100px; /* change height to see repeat-y behavior */
-
-    background-image: radial-gradient(100px at 50px 50px, #F0F0F0 99%, transparent 0),
-    linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80%),
-    linear-gradient(#F0F0F0 20px, transparent 0),
-    linear-gradient(#F0F0F0 10px, transparent 0),
-    linear-gradient(#F0F0F0 10px, transparent 0),
-    linear-gradient(#F0F0F0 10px, transparent 0);
-
-    background-repeat: repeat-y;
-
-    background-size: 100px 200px, /* circle */
-    20px 200px, /* highlight */
-    150px 200px,
-    350px 200px,
-    300px 200px;
-
-    background-position: 0 0, /* circle */
-    0 0, /* highlight */
-    120px 0,
-    120px 40px,
-    120px 65px,
-    120px 90px;
-
-    animation: shine 1s infinite;
-}
-
-.skeleton-sm:empty {
-    margin: 1rem auto;
-    width: 100%;
-    height: 64px; /* change height to see repeat-y behavior */
-
-    background-image: radial-gradient(100px at 50px 50px, #F0F0F0 99%, transparent 0),
-    linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80%),
-    linear-gradient(#F0F0F0 20px, transparent 0),
-    linear-gradient(#F0F0F0 10px, transparent 0),
-    linear-gradient(#F0F0F0 10px, transparent 0);
-
-    background-repeat: repeat-y;
-
-    background-size: 64px 200px, /* circle */
-    20px 200px, /* highlight */
-    100% 200px;
-
-    background-position: 0 0, /* circle */
-    0 0, /* highlight */
-    80px 0,
-    80px 40px;
-
-    animation: shine-sm 1s infinite;
-}
-
-@keyframes shine {
-    to {
-        background-position: 0 0,
-        100% 0, /* move highlight to right */
-        120px 0,
-        120px 40px,
-        120px 65px,
-        120px 90px;
-    }
-}
-
-@keyframes shine-sm {
-    to {
-        background-position: 0 0,
-        100% 0, /* move highlight to right */
-        80px 0,
-        80px 40px;
-    }
 }
 
 .author {
@@ -485,12 +422,108 @@ li.is-active a {
 
 .notification {
     margin-bottom: .5rem;
-    padding: 1rem .5rem;
+}
+
+.widget {
+    margin-bottom: 1rem;
 }
 
 .widget_title {
     font-size: 1rem;
-    margin-bottom: .5rem;
+    font-weight: bold;
+
+    &:not(:last-child) {
+        margin-bottom: .5rem;
+    }
+}
+
+.statistic {
+    .level {
+        margin-bottom: .5rem;
+    }
+}
+
+.logo {
+    .x {
+        font-size: 1.5rem;
+        text-transform: uppercase;
+    }
+
+    .y {
+        font-size: .75rem;
+    }
+}
+
+.autocomplete .dropdown-menu,
+.dropdown:not(.is-top-right) .dropdown-menu {
+    top: calc(100% + 5px);
+    padding-top: 10px;
+
+    &:before {
+        @include triangle(top, #1515150f, 12px);
+        position: absolute;
+        top: -1px;
+        left: 8px;
+    }
+
+    &:after {
+        @include triangle(top, #FFF, 11px);
+        position: absolute;
+        top: 1px;
+        left: 9px;
+        z-index: 4;
+    }
+}
+
+.dropdown.is-top-right .dropdown-menu {
+    bottom: calc(100% + 10px) !important;
+
+    &:before {
+        @include triangle(bottom, #1515150f, 10px);
+        position: absolute !important;
+        bottom: -8px !important;
+        left: 9px !important;
+    }
+
+    &:after {
+        @include triangle(bottom, #FFF, 9px);
+        position: absolute !important;
+        bottom: -7px !important;
+        left: 10px !important;
+        z-index: 4;
+    }
+}
+
+.dropdown.is-bottom-left .dropdown-menu {
+    &:before {
+        right: 8px;
+        left: unset;
+    }
+
+    &:after {
+        left: unset;
+        right: 9px;
+    }
+}
+
+.column {
+    .widget {
+        height: 100%;
+
+        .user-card.large {
+            height: 100%;
+        }
+    }
+}
+
+.image {
+    .b-skeleton {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
 }
 
 @import "mobile";

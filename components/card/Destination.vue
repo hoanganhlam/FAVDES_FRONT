@@ -3,12 +3,10 @@
         <div class="card-content">
             <div class="media">
                 <div class="media-left">
-                    <div class="image is-64x64">
-                        <img src="/logo.png" alt="">
-                    </div>
+                    <avatar class="is-64x64" :value="media" :name="value.title"/>
                 </div>
                 <div class="media-content">
-                    <h4 class="title is-5"><n-link :to="slug">{{value.title}}</n-link></h4>
+                    <n-link :to="`/${value.slug}`">{{value.title}}</n-link>
                 </div>
             </div>
         </div>
@@ -19,7 +17,14 @@
     export default {
         name: "Destination",
         props: {
-            value: {},
+            value: {
+                default: () => {
+                    return {
+                        title: "Hà Nội",
+                        slug: "hanoi"
+                    }
+                }
+            },
             type: {
                 type: String,
                 default: 'destination'
@@ -28,11 +33,17 @@
         computed: {
             slug() {
                 return `/${this.value.slug}`
+            },
+            media() {
+                if (this.value.medias && this.value.medias.length) {
+                    return this.value.medias[0];
+                } else {
+                    return this.value['temp_media']
+                }
             }
         }
     }
 </script>
 
-<style scoped>
-
+<style lang="scss">
 </style>

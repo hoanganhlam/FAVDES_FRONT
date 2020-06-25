@@ -52,7 +52,7 @@ Vue.mixin({
             return new moment(dateStr, 'YYYY-MM-DD').format('YYYY-MM-DD')
         },
         cleanData(data) {
-            let out = {}
+            let out = {};
             Object.keys(data).forEach(i => {
                 if (data[i]) {
                     if (['start_time', 'end_time'].includes(i)) {
@@ -65,7 +65,7 @@ Vue.mixin({
                         out[i] = data[i]
                     }
                 }
-            })
+            });
             return out
         },
         convertDate(date) {
@@ -77,6 +77,17 @@ Vue.mixin({
         momentTime(date) {
             return moment(date, 'YYYY-MM-DDTHH:mm').utc()
         },
+        avatarName(name, length) {
+            let matches = name.match(/\b(\w)/g);
+            if (matches) {
+                if (length) {
+                    return matches.join('').substr(0, length)
+                }
+                return matches.join('')
+            } else {
+                return name;
+            }
+        }
     },
     computed: {
         currentUser: {

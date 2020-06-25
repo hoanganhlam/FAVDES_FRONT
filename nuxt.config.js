@@ -1,10 +1,12 @@
-require('dotenv').config()
+require('dotenv').config();
+
 export default {
     mode: 'universal',
     /*
     ** Headers of the page
     */
     head: {
+        titleTemplate: '%s | 9Destination.com',
         title: process.env.npm_package_name || '',
         meta: [
             {charset: 'utf-8'},

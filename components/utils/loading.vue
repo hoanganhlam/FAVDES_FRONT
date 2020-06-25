@@ -30,7 +30,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: #87ceeb;
+        background: rgba(135, 206, 235, 0.30);
 
         img {
             margin: 0 auto;

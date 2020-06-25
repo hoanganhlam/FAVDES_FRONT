@@ -1,6 +1,6 @@
 <template>
     <div class="card" style="width: 100%">
-        <div class="card-image">
+        <div class="card-content">
             <b-field class="has-text-centered">
                 <img src="/logo.png" alt="">
             </b-field>

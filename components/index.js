@@ -18,7 +18,7 @@ import Step from "./modal/Step";
 import TripSetting from "./modal/TripSetting";
 import ContentEditable from "./field/ContentEditable";
 import CardStep from "./card/Step"
-
+import CardDestination from "./card/Destination";
 //Field
 import DataSelect from "./field/Data";
 import Editable from "./field/Editable";
@@ -27,28 +27,29 @@ import Field from "./field"
 import Json from "./field/Json";
 import MediaField from "./field/Media";
 
-Vue.component('field-media', MediaField)
-Vue.component('field-json', Json)
-Vue.component('field', Field)
-Vue.component('map-select', MapSelect)
-Vue.component('card-step', CardStep)
-Vue.component('ce', ContentEditable)
-Vue.component('step', Step)
-Vue.component('trip-setting', TripSetting)
-Vue.component('thumbnail', Thumbnail)
-Vue.component('comment', Comment)
-Vue.component('media-viewer', MediaViewer)
-Vue.component('follow', Follow)
-Vue.component('Avatar', Avatar)
-Vue.component('Upload', Upload)
-Vue.component('editable', Editable)
-Vue.component('world-map', Map)
-Vue.component('Login', Login)
-Vue.component('user-card', User)
-Vue.component('user-follow', UserFollow)
-Vue.component('create-post', CreatePost)
-Vue.component('media-slider', MediaSlider)
-Vue.component('activity', Activity)
-Vue.component('ActivityDetail', ActivityDetail)
-Vue.component('ActivityList', ActivityList)
-Vue.component('data-select', DataSelect)
+Vue.component('field-media', MediaField);
+Vue.component('field-json', Json);
+Vue.component('field', Field);
+Vue.component('map-select', MapSelect);
+Vue.component('card-step', CardStep);
+Vue.component('card-destination', CardDestination);
+Vue.component('ce', ContentEditable);
+Vue.component('step', Step);
+Vue.component('trip-setting', TripSetting);
+Vue.component('thumbnail', Thumbnail);
+Vue.component('comment', Comment);
+Vue.component('media-viewer', MediaViewer);
+Vue.component('follow', Follow);
+Vue.component('Avatar', Avatar);
+Vue.component('Upload', Upload);
+Vue.component('editable', Editable);
+Vue.component('world-map', Map);
+Vue.component('Login', Login);
+Vue.component('user-card', User);
+Vue.component('user-follow', UserFollow);
+Vue.component('create-post', CreatePost);
+Vue.component('media-slider', MediaSlider);
+Vue.component('activity', Activity);
+Vue.component('ActivityDetail', ActivityDetail);
+Vue.component('ActivityList', ActivityList);
+Vue.component('data-select', DataSelect);

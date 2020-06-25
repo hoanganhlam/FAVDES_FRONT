@@ -1,27 +1,18 @@
 <template>
-    <div>
-        <section class="section hero is-small is-light" v-if="typeof $route.params.activity === 'undefined'"
-                 v-bind:class="{'is-fullheight': updating}">
+    <div class="destination-page">
+        <section class="hero">
             <div class="hero-body">
                 <div class="container">
                     <div v-if="typeof $route.params.flag === 'undefined'" class="columns">
                         <div class="column">
                             <div class="content">
-                                <h1 class="title is-spaced"
-                                    v-bind:class="{'hidden': typeof $route.params.destination === 'undefined'}">
-                                    <editable icon="format-title" :is-updating="updating" v-if="destination"
-                                              v-model="destination.title"/>
-                                    <span v-else>{{title}}</span>
-                                </h1>
                                 <p class="subtitle">
                                     <editable icon="text" type="textarea" :is-updating="updating" v-if="destination"
                                               v-model="destination.description"/>
                                     <span v-else>{{tag_line}}</span>
                                 </p>
-                                <p v-if="destination && destination.address">
-                                    {{destination.address.formatted_address}}</p>
                             </div>
-                            <div v-if="updating && destination" class="columns is-mobile">
+                            <div v-if="updating && destination && destination.photos" class="columns is-mobile">
                                 <div class="column is-3" v-for="p in destination.photos" :key="p.id">
                                     <div class="image">
                                         <img :src="p.sizes['270_270']" alt="">
@@ -55,46 +46,49 @@
                     <div v-else-if="$route.params.flag">
                         <h1 class="title">{{title}}</h1>
                     </div>
+                    <activity-list :q="q" :value="response"/>
                 </div>
             </div>
         </section>
-        <section class="section hero is-small" v-if="!updating">
-            <div class="hero-body">
-                <div class="container">
-                    <div class="columns">
-                        <div class="column is-8">
-                            <ActivityList :value="response" :q="q"/>
-                        </div>
-                        <div class="column">
-                            <user-follow></user-follow>
-                        </div>
+        <div class="section has-background-light">
+            <div class="container">
+                <div class="columns is-multiline">
+                    <div class="column is-4" v-for="(d, i) in responseD.results" :key="i">
+                        <destination :value="d"/>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 </template>
 
 <script>
+    import Destination from "../../components/card/Destination";
+
     export default {
         name: 'HomePage',
-        async asyncData({$api, params, query}) {
-            let destination = null
+        components: {Destination},
+        async asyncData({$api, params, query, store}) {
+            let destination = null;
             let q = {
-                page: Number.parseInt(query.page) || 1
-            }
+                page: Number.parseInt(query.page) || 1,
+                page_size: 9
+            };
             if (params.flag) {
                 q.hashtag = params.flag
             }
             if (params.destination && !['hashtag', 'anywhere'].includes(params.destination)) {
-                destination = await $api.destination.get(params.destination)
+                destination = await $api.destination.get(params.destination);
                 q.destination = destination.id
             }
-            let response = await $api.activity.list(q)
+            let response = await $api.activity.list(q);
+            store.commit('config/SET_TARGET', {...destination});
+            store.commit('config/SET_TARGET_MODEL', 'destination');
             return {
                 destination,
                 response,
-                q
+                q,
+                responseD: await $api.destination.list({page_size: 3})
             }
         },
         data() {
@@ -135,7 +129,7 @@
                         return this.subtitle
                     }
                 } else if (params.destination) {
-                    return this.destination.title
+                    return `${this.destination.title} Checkin | ${this.destination.title} Photos`
                 }
                 return "9Destination - Get inspired and share your best moment!"
             },

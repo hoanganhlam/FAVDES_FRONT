@@ -1,25 +1,23 @@
 <template>
-    <div class="card post">
-        <div class="card-content" style="padding-bottom: 0;" v-if="layout !== 'square'">
+    <div :class="`card post layout-${layout}`">
+        <div class="card-content" v-if="layout !== 'square'">
             <div class="media">
                 <div class="media-left">
                     <Avatar class="is-32x32" :value="actor.media" :name="actor.title"/>
                 </div>
                 <div class="media-content" style="line-height: 1.2;">
-                    <div>
-                        <strong>
-                            <n-link :to="actor.slug" v-if="actor.title">{{actor.title}}</n-link>
-                        </strong>
-                    </div>
+                    <strong>
+                        <n-link :to="actor.slug" v-if="actor.title">{{actor.title}}</n-link>
+                    </strong>
                     <div>
                         <small>
                             <n-link :to="`/posts/${activity.id}`">{{timeSince(activity.created)}}</n-link>
                         </small>
-                        <small v-if="activity.destination">
+                        <small v-if="activity.address">
                             <b-icon size="is-small" icon="menu-right"></b-icon>
                         </small>
-                        <small v-if="activity.destination">
-                            <n-link :to="`/${activity.destination.slug}`">{{activity.destination['title']}}
+                        <small v-if="activity.address">
+                            <n-link :to="`/add/${activity.address.id}`">{{activity.address['formatted_address']}}
                             </n-link>
                         </small>
                     </div>
@@ -31,44 +29,37 @@
                 </div>
             </div>
         </div>
-        <action-object :to="activity.slug" v-if="value['action_object']" :value="value['action_object']"/>
-        <div v-if="items.length && layout !== 'square' && activity.address" class="card-content" style="padding-top: 0">
-            <div class="tags" style="margin-bottom: 0">
-                <n-link class="tag" v-for="d in activity.address.destinations" :to="`/${d.slug}`" :key="d.id">
-                    <b-icon icon="map-marker" size="is-small"></b-icon>
-                    <span>{{d.title}}</span>
-                </n-link>
+        <action-object :to="`/posts/${activity.id}`" v-if="value['action_object']" :value="value['action_object']"
+                       :layout="layout"/>
+        <div class="card-content" style="padding-top: 0">
+            <div class="level" v-if="items.length && activity.address">
+                <div class="tags">
+                    <n-link
+                        class="tag"
+                        v-for="t in activity.taxonomies"
+                        :to="`/${primaryD && t.flag === 'PRIMARY' ? primaryD.slug : 'hashtag'}/${t.slug}`"
+                        :key="t.id">
+                        <b-icon size="is-small" icon="pound"></b-icon>
+                        <span>{{t.title}}</span>
+                    </n-link>
+                </div>
             </div>
-            <div class="tags">
-                <n-link
-                    class="tag"
-                    v-for="t in activity.taxonomies"
-                    :to="`/${primaryD && t.flag === 'PRIMARY' ? primaryD.slug : 'hashtag'}/${t.slug}`"
-                    :key="t.id">
-                    <b-icon size="is-small" icon="pound"></b-icon>
-                    <span>{{t.title}}</span>
-                </n-link>
-            </div>
-        </div>
-        <div v-if="layout !== 'square'" class="card-content" style="padding-top: 0;">
             <div class="level is-mobile">
                 <div class="level-left">
                     <div class="buttons">
-                        <div class="button is-small" @click="doVote()"
+                        <div class="button is-text is-small" @click="doVote()"
                              v-bind:class="{'is-success': vote['is_voted'], 'is-loading': loading.vote}">
                             <b-icon size="is-small" icon="chevron-up"></b-icon>
                             <span>{{vote["total"]}}</span>
                         </div>
-                        <div class="button is-small">
+                        <n-link :to="`/posts/${activity.id}`" class="button is-text is-small">
                             <b-icon size="is-small" icon="comment"></b-icon>
                             <span>0</span>
-                        </div>
+                        </n-link>
                     </div>
                 </div>
                 <div class="level-right">
-                    <div class="button is-small">
-                        <b-icon icon="cash-multiple" size="is-small"></b-icon>
-                    </div>
+                    <user-card :show-name="false" :value="activity.actor"/>
                 </div>
             </div>
         </div>
@@ -110,9 +101,9 @@
         },
         methods: {
             async doVote() {
-                this.loading.vote = true
-                let res = await this.$api.activity.vote(this.activity.id, {})
-                this.vote.is_voted = res.result
+                this.loading.vote = true;
+                let res = await this.$api.activity.vote(this.activity.id, {});
+                this.vote.is_voted = res.result;
                 if (res.result) {
                     this.vote["total"]++
                 } else {
@@ -124,13 +115,13 @@
         created() {
             switch (this.value['action_object_content_type_id']) {
                 case this.getType('post'):
-                    Vue.component('action-object', Post)
-                    break
+                    Vue.component('action-object', Post);
+                    break;
                 case this.getType('destination'):
-                    Vue.component('action-object', Destination)
-                    break
+                    Vue.component('action-object', Destination);
+                    break;
                 default:
-                    break
+                    break;
             }
             this.$axios.$get('/activity/check-vote/', {
                 params: {
@@ -142,13 +133,13 @@
         },
         computed: {
             actor() {
-                let media = null
-                let title = null
-                let slug = null
+                let media = null;
+                let title = null;
+                let slug = null;
                 if (this.activity['actor_content_type_id'] === this.getType('user')) {
-                    media = this.activity.actor.profile ? this.activity.actor.profile.media : null
-                    title = this.convertName(this.activity.actor)
-                    slug = `/profile/${this.activity.actor.username}`
+                    media = this.activity.actor.profile ? this.activity.actor.profile.media : null;
+                    title = this.convertName(this.activity.actor);
+                    slug = `/profile/${this.activity.actor.username}`;
                 }
                 return {
                     media,
@@ -158,9 +149,9 @@
             },
             items() {
                 if (this.activity.address) {
-                    return this.activity.address['destinations'] ? this.activity.address['destinations'] : []
+                    return this.activity.address['destinations'] ? this.activity.address['destinations'] : [];
                 }
-                return []
+                return [];
             },
             primaryD() {
                 return this.activity.address

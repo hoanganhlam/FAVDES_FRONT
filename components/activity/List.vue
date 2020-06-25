@@ -1,17 +1,20 @@
 <template>
     <div v-if="!loading">
-        <create-post style="margin-bottom: 1.5rem" @done="fetch(1)"></create-post>
-        <activity v-for="a in data.results" :key="a.id" :value="a" layout="minimize"></activity>
+        <div class="columns is-multiline">
+            <div class="column is-4" v-for="a in data.results" :key="a.id">
+                <activity layout="square" :value="a"/>
+            </div>
+        </div>
         <b-pagination
-            rounded
             :total="data.count"
             :current.sync="queries.page"
-            :per-page="10">
+            :per-page="q.page_size || 9">
             <b-pagination-button
                 slot-scope="props"
                 :page="props.page"
                 :id="`page${props.page.number}`"
                 tag="router-link"
+                :href="`?page=${props.page.number}`"
                 :to="`?page=${props.page.number}`">
                 {{props.page.number}}
             </b-pagination-button>
@@ -20,6 +23,7 @@
                 slot-scope="props"
                 :page="props.page"
                 tag="router-link"
+                :href="`?page=${props.page.number}`"
                 :to="`?page=${props.page.number}`">
                 Previous
             </b-pagination-button>
@@ -28,13 +32,37 @@
                 slot-scope="props"
                 :page="props.page"
                 tag="router-link"
+                :href="`?page=${props.page.number}`"
                 :to="`?page=${props.page.number}`">
                 Next
             </b-pagination-button>
         </b-pagination>
     </div>
     <div v-else>
-        <div class="skeleton" v-for="i in 10" :key="i"></div>
+        <div class="columns is-multiline">
+            <div class="column is-4" v-for="i in 9" :key="i">
+                <div class="card post layout-square">
+                    <div class="card-image">
+                        <div class="image is-1by1">
+                            <b-skeleton :rounded="false" height="100%"></b-skeleton>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <b-skeleton :rounded="false" height="1rem"></b-skeleton>
+                    </div>
+                    <div class="card-content" style="padding-top: 0">
+                        <div class="level is-mobile">
+                            <div class="level-left">
+                                <b-skeleton width="1rem" height="1rem"></b-skeleton>
+                            </div>
+                            <div class="level-right">
+                                <b-skeleton width="1rem" height="1rem"></b-skeleton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -45,7 +73,10 @@
             q: {
                 type: Object,
                 default: () => {
-                    return {}
+                    return {
+                        page_size: 9,
+                        page: 1
+                    }
                 }
             },
             value: {
@@ -67,16 +98,16 @@
         },
         methods: {
             async fetch(page) {
-                this.loading = true
-                this.queries.page = page
-                this.data = await this.$api.activity.list(this.queries)
-                this.loading = false
+                this.loading = true;
+                this.queries.page = page;
+                this.data = await this.$api.activity.list(this.queries);
+                this.loading = false;
             }
         },
         watch: {
             $route() {
-                let page = Number.parseInt(this.$route.query.page) || 1
-                this.fetch(page)
+                let page = Number.parseInt(this.$route.query.page) || 1;
+                this.fetch(page);
             }
         }
     }

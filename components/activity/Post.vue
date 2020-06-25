@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div :class="boxClass" style="padding-bottom: 0">
-            <div v-if="value.medias.length" :class="galleryClass">
-                <div v-for="(img, i) in photos" :class="`clickable gallery__item gallery__item--${i + 1}`" @click="handleClick(i)">
+        <div :class="boxClass" style="padding-bottom: 0" @click="handleClick()">
+            <div v-if="value.medias && value.medias.length" :class="galleryClass">
+                <div v-for="(img, i) in photos" :class="`clickable gallery__item gallery__item--${i + 1}`">
                     <img class="gallery__img" :src="src(i)" :alt="img.title" @load="onLoad">
                 </div>
             </div>
@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        <div class="card-content content" v-bind:class="{'inside hover': layout === 'square'}">
+        <div class="card-content content">
             <h3 style="margin-bottom: 10px" class="title is-6" v-if="value.title">{{value.title}}</h3>
             <p v-if="value.content">{{value.content}}</p>
         </div>
@@ -35,48 +35,47 @@
         },
         methods: {
             src(index) {
-                let out = null
-                let size = this.value.medias.length
+                let out = null;
                 if (['square'].includes(this.layout)) {
-                    out = this.value.medias[index].sizes['270_270']
+                    out = this.value.medias[index].sizes['thumb_270_270'];
                 } else {
-                    out = this.value.medias[index].sizes['resize']
+                    out = this.value.medias[index].sizes['resize'];
                 }
-                return this.cleanURI(out)
+                return this.cleanURI(out);
             },
             handleClick(i) {
-                this.$store.dispatch('media/setData', {
-                    medias: this.value.medias,
-                    index: i,
-                    user: this.value.user
-                })
+                if (this.to !== this.$route.path) {
+                    this.$router.replace({path: this.to});
+                }
             },
             onLoad(e) {
-                this.reLayout()
+                this.reLayout();
             }
         },
         computed: {
             photos() {
                 if (this.layout === 'minimize') {
-                    return this.value.medias.slice(0, 2)
+                    return this.value.medias.slice(0, 2);
                 } else if (this.layout === 'square' && this.value.medias.length) {
-                    return this.value.medias.slice(0, 1)
+                    return this.value.medias.slice(0, 1);
                 }
-                return this.value.medias
+                return this.value.medias;
             },
             galleryClass() {
-                let lu = this.value.medias.length
+                let lu = this.value.medias.length;
                 if (this.layout === 'full') {
-                    lu = 'full'
+                    lu = 'full';
                 } else if (this.layout === 'minimize' && this.value.medias.length === 1) {
-                    lu = 'part'
+                    lu = 'part';
                 } else if (this.layout === 'square') {
-                    lu = 'square'
+                    lu = 'square';
+                } else {
+                    lu = 'square';
                 }
-                return `gallery layout-${lu}`
+                return `gallery layout-${lu}`;
             },
             boxClass() {
-                return this.layout === 'square' ? 'card-image' : 'card-content'
+                return `card-image${this.layout === 'square' ? ' image is-1by1' : ''}`;
             }
         }
     }

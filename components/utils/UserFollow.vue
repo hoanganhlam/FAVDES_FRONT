@@ -13,8 +13,8 @@
             </div>
             <div v-else class="columns is-multiline">
                 <div class="column is-12">
-                    <b-field label="Find your friend">
-                        <b-input placeholder="Type something"></b-input>
+                    <b-field>
+                        <b-input placeholder="Find your friends"></b-input>
                     </b-field>
                 </div>
                 <div class="column is-12">
