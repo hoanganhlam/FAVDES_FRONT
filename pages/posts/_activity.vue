@@ -1,15 +1,8 @@
 <template>
     <section class="hero">
         <div class="hero-body">
-            <div class="container">
-                <div class="columns">
-                    <div class="column is-8">
-                        <ActivityDetail :value="activity"/>
-                    </div>
-                    <div class="column">
-                        <user-follow></user-follow>
-                    </div>
-                </div>
+            <div class="container small">
+                <ActivityDetail :value="activity"/>
             </div>
         </div>
     </section>

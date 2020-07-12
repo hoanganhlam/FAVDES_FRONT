@@ -22,6 +22,7 @@ import nuxt_plugin_mixins_36a27306 from 'nuxt_plugin_mixins_36a27306' // Source:
 import nuxt_plugin_server_3c0f4b8e from 'nuxt_plugin_server_3c0f4b8e' // Source: ../plugins/server (mode: 'all')
 import nuxt_plugin_repository_02bac980 from 'nuxt_plugin_repository_02bac980' // Source: ../plugins/repository (mode: 'all')
 import nuxt_plugin_client_71edc27e from 'nuxt_plugin_client_71edc27e' // Source: ../plugins/client (mode: 'client')
+import nuxt_plugin_ga_fb0a2534 from 'nuxt_plugin_ga_fb0a2534' // Source: ../plugins/ga.js (mode: 'client')
 
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
@@ -216,6 +217,10 @@ async function createApp (ssrContext) {
 
   if (process.client && typeof nuxt_plugin_client_71edc27e === 'function') {
     await nuxt_plugin_client_71edc27e(app.context, inject)
+  }
+
+  if (process.client && typeof nuxt_plugin_ga_fb0a2534 === 'function') {
+    await nuxt_plugin_ga_fb0a2534(app.context, inject)
   }
 
   // If server-side, wait for async component to be resolved first

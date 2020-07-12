@@ -1,5 +1,5 @@
 <template>
-    <div v-if="activity">
+    <div v-if="activity" class="activity-detail">
         <activity :value="activity"/>
         <comment model="activity" :object-id="activity.id"></comment>
     </div>
@@ -35,4 +35,13 @@
     }
 </script>
 <style lang="scss">
+    .activity-detail {
+        .card {
+            box-shadow: none;
+
+            .card-content {
+                padding: 1rem 0;
+            }
+        }
+    }
 </style>

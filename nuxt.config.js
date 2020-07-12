@@ -17,7 +17,7 @@ export default {
             {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
         ],
         script: [
-            { src: 'https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js' }
+            {src: 'https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js'}
         ],
     },
     /*
@@ -40,7 +40,8 @@ export default {
         '@/plugins/mixins',
         {src: '~/plugins/server'},
         {src: '~/plugins/repository'},
-        {src: '~/plugins/client', mode: 'client'}
+        {src: '~/plugins/client', mode: 'client'},
+        {src: '~plugins/ga.js', mode: 'client'}
     ],
 
     /*

@@ -1,8 +1,8 @@
 <template>
     <div>
         <div :class="boxClass" style="padding-bottom: 0" @click="handleClick()">
-            <div v-if="value.medias && value.medias.length" :class="galleryClass">
-                <div v-for="(img, i) in photos" :class="`clickable gallery__item gallery__item--${i + 1}`">
+            <div v-if="value.medias && value.medias.length">
+                <div v-for="(img, i) in photos" :class="`clickable`">
                     <img class="gallery__img" :src="src(i)" :alt="img.title" @load="onLoad">
                 </div>
             </div>
@@ -15,6 +15,7 @@
         <div class="card-content content">
             <h3 style="margin-bottom: 10px" class="title is-6" v-if="value.title">{{value.title}}</h3>
             <p v-if="value.content">{{value.content}}</p>
+            <slot></slot>
         </div>
     </div>
 </template>
@@ -39,7 +40,7 @@
                 if (['square'].includes(this.layout)) {
                     out = this.value.medias[index].sizes['thumb_270_270'];
                 } else {
-                    out = this.value.medias[index].sizes['resize'];
+                    out = this.value.medias[index].sizes['full_size'];
                 }
                 return this.cleanURI(out);
             },
@@ -60,19 +61,6 @@
                     return this.value.medias.slice(0, 1);
                 }
                 return this.value.medias;
-            },
-            galleryClass() {
-                let lu = this.value.medias.length;
-                if (this.layout === 'full') {
-                    lu = 'full';
-                } else if (this.layout === 'minimize' && this.value.medias.length === 1) {
-                    lu = 'part';
-                } else if (this.layout === 'square') {
-                    lu = 'square';
-                } else {
-                    lu = 'square';
-                }
-                return `gallery layout-${lu}`;
             },
             boxClass() {
                 return `card-image${this.layout === 'square' ? ' image is-1by1' : ''}`;

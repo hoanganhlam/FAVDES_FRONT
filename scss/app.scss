@@ -10,7 +10,7 @@ $primary: #333;
 $link: $primary;
 $card-shadow: 0 0px 1px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
 $section-padding: 1rem 1.5rem;
-$footer-padding: 3rem 1.5rem;
+$footer-padding: 1.5rem;
 $card-footer-padding: 0.75rem 1rem;
 $dropdown-item-active-background-color: #EEE;
 $dropdown-item-hover-color: brown;
@@ -33,7 +33,6 @@ $body-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
 @import "~bulma/bulma";
 @import "functions";
 @import "mixins";
-@import "grid";
 @import "./mapbox-gl.css";
 
 body {
@@ -163,6 +162,37 @@ body {
     p {
         font-size: 14px;
         color: #333333;
+    }
+}
+
+.posts {
+    .card.post {
+        overflow: hidden;
+
+        .card-content {
+            position: absolute;
+            bottom: - 100%;
+            left: 0;
+            right: 0;
+            padding: .75rem;
+            background: #EEEEEE;
+
+            h3 {
+                margin-bottom: .5rem;
+                font-weight: bold;
+            }
+
+            a {
+                color: #333333;
+            }
+        }
+
+        &:hover {
+            .card-content {
+                bottom: 0;
+                transition: .3s;
+            }
+        }
     }
 }
 
@@ -420,10 +450,6 @@ li.is-active a {
     }
 }
 
-.notification {
-    margin-bottom: .5rem;
-}
-
 .widget {
     margin-bottom: 1rem;
 }
@@ -437,21 +463,8 @@ li.is-active a {
     }
 }
 
-.statistic {
-    .level {
-        margin-bottom: .5rem;
-    }
-}
-
 .logo {
-    .x {
-        font-size: 1.5rem;
-        text-transform: uppercase;
-    }
-
-    .y {
-        font-size: .75rem;
-    }
+    font-weight: bold;
 }
 
 .autocomplete .dropdown-menu,
@@ -524,6 +537,16 @@ li.is-active a {
         right: 0;
         bottom: 0;
     }
+}
+
+.pagination .pagination-next, .pagination .pagination-previous {
+    padding-left: .75rem;
+    padding-right: .75rem;
+    border-radius: 10px;
+}
+
+.uppercase {
+    text-transform: uppercase;
 }
 
 @import "mobile";

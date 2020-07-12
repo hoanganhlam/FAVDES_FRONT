@@ -23,7 +23,7 @@
                         <div v-if="!updating" class="media-right">
                             <div class="buttons">
                                 <follow model="user" :pk="user.id" :value="user.is_following"></follow>
-                                <b-dropdown position="is-bottom-left" aria-role="menu">
+                                <b-dropdown v-if="currentUser" position="is-bottom-left" aria-role="menu">
                                     <div class="button" slot="trigger">
                                         <b-icon icon="dots-vertical" size="is-small"></b-icon>
                                     </div>

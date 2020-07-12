@@ -22,16 +22,9 @@
                         </small>
                     </div>
                 </div>
-                <div class="media-right">
-                    <div class="button is-text">
-                        <b-icon icon="food"></b-icon>
-                    </div>
-                </div>
             </div>
         </div>
-        <action-object :to="`/posts/${activity.id}`" v-if="value['action_object']" :value="value['action_object']"
-                       :layout="layout"/>
-        <div class="card-content" style="padding-top: 0">
+        <action-object :to="`/posts/${activity.id}`" v-if="value['action_object']" :value="value['action_object']" :layout="layout">
             <div class="level" v-if="items.length && activity.address">
                 <div class="tags">
                     <n-link
@@ -62,7 +55,7 @@
                     <user-card :show-name="false" :value="activity.actor"/>
                 </div>
             </div>
-        </div>
+        </action-object>
     </div>
 </template>
 
@@ -73,7 +66,7 @@
 
     export default {
         name: "Activity",
-        components: {Destination},
+        components: {Destination, 'action-object': Post},
         props: {
             value: {},
             layout: {
@@ -113,16 +106,6 @@
             }
         },
         created() {
-            switch (this.value['action_object_content_type_id']) {
-                case this.getType('post'):
-                    Vue.component('action-object', Post);
-                    break;
-                case this.getType('destination'):
-                    Vue.component('action-object', Destination);
-                    break;
-                default:
-                    break;
-            }
             this.$axios.$get('/activity/check-vote/', {
                 params: {
                     pk: this.activity.id

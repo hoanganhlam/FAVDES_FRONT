@@ -1,33 +1,31 @@
 <template>
     <div>
         <header class="header">
-            <div class="container">
-                <b-navbar>
-                    <template slot="brand">
-                        <b-navbar-item class="has-logo" tag="div">
-                            <n-link class="logo" to="/"><img src="/logo.png" alt="9Destination"></n-link>
-                        </b-navbar-item>
-                    </template>
-                    <template slot="start">
-                        <b-navbar-item tag="div">
-                            <target-selector/>
-                        </b-navbar-item>
-                    </template>
-                    <template slot="end">
-                        <b-navbar-item tag="div">
-                            <div class="buttons" v-if="!Boolean(currentUser)">
-                                <button class="button is-primary" @click="handleClick(false)">
-                                    <strong>Sign up</strong>
-                                </button>
-                                <button class="button is-light" @click="handleClick(true)">
-                                    Log in
-                                </button>
-                            </div>
-                            <user-card v-else :value="currentUser"></user-card>
-                        </b-navbar-item>
-                    </template>
-                </b-navbar>
-            </div>
+            <b-navbar>
+                <template slot="brand">
+                    <b-navbar-item class="has-logo" tag="div">
+                        <n-link class="logo" to="/">9DESTINATION</n-link>
+                    </b-navbar-item>
+                </template>
+                <template slot="start">
+                    <b-navbar-item tag="div">
+                        <target-selector/>
+                    </b-navbar-item>
+                </template>
+                <template slot="end">
+                    <b-navbar-item tag="div">
+                        <div class="buttons" v-if="!Boolean(currentUser)">
+                            <button class="button is-primary" @click="handleClick(false)">
+                                <strong>Sign up</strong>
+                            </button>
+                            <button class="button is-light" @click="handleClick(true)">
+                                Log in
+                            </button>
+                        </div>
+                        <user-card v-else :value="currentUser"></user-card>
+                    </b-navbar-item>
+                </template>
+            </b-navbar>
         </header>
         <main class="main-content">
             <nuxt/>
@@ -84,13 +82,6 @@
 
 <style lang="scss">
     .header {
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-        border-bottom: 1px solid #EEEEEE;
-
         .navbar {
             background-color: unset;
         }
@@ -100,7 +91,7 @@
         padding: 0 .75rem;
 
         img {
-            max-height: 1.5rem;
+            max-height: 1rem;
         }
     }
 </style>

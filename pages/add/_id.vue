@@ -2,7 +2,12 @@
     <div class="hero">
         <div class="hero-body">
             <div class="container">
-                <activity-list :value="activityRes" :q="queries"/>
+                <activity-list :value="activityRes" :q="queries">
+                    <h1 class="widget_title">
+                        <b-icon icon="map-marker" size="is-small"></b-icon>
+                        <span>{{address.formatted_address}}</span>
+                    </h1>
+                </activity-list>
             </div>
         </div>
     </div>

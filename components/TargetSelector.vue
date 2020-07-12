@@ -14,7 +14,9 @@
                              v-bind:class="{'is-active': globalApp && globalApp.id === app.id}"
                              aria-role="listitem">
                 <div class="media">
-                    <b-icon class="media-left" s icon="account-multiple"></b-icon>
+                    <div class="media-left">
+                        <avatar class="is-24x24" :value="app['temp_media']"></avatar>
+                    </div>
                     <div class="media-content">
                         <h3>{{app[field]}}</h3>
                     </div>
