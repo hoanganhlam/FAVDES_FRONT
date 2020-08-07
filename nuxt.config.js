@@ -67,6 +67,19 @@ export default {
         /*
         ** You can extend webpack config here
         */
+        extractCSS: true,
+        optimization: {
+            splitChunks: {
+                cacheGroups: {
+                    styles: {
+                        name: 'styles',
+                        test: /\.(css|vue)$/,
+                        chunks: 'all',
+                        enforce: true
+                    }
+                }
+            }
+        },
         extend(config, ctx) {
         }
     }
