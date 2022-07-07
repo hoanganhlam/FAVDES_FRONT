@@ -20,7 +20,7 @@
         "cookie-universal-nuxt": "^2.1.0",
         "lodash": "latest",
         "mapbox-gl": "^1.6.1",
-        "moment": "^2.24.0",
+        "moment": "^2.29.4",
         "node-sass": "^4.13.0",
         "nuxt": "^2.0.0",
         "nuxt-buefy": "^0.3.31",
